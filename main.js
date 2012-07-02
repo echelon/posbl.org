@@ -7,6 +7,35 @@ var mat, cube, mat2;
 var text2;
 var sphere, mat3, object, plane;
 
+var imgMat;
+
+var DEFAULT_IMAGE = './img/crate.jpg';
+
+/**
+ * Model class.
+ */
+var Model = function(mat, texture, geo) {
+
+	this.mat = mat || new THREE.MeshBasicMaterial({
+		map: texture || THREE.ImageUtils.loadTexture(DEFAULT_IMAGE),
+		overdraw: true
+	});
+
+	this.object = new THREE.Mesh(
+			geo || new THREE.CubeGeometry(100, 100, 100),
+			this.mat);
+
+	this.addTo = function(scene) {
+		scene.add(this.object);
+	}
+
+	this.offsetRotation = function(x, y, z) {
+		this.object.rotation.x += x;
+		this.object.rotation.y += y;
+		this.object.rotation.z += z;
+	}
+}
+
 function init() {
 
 	scene = new THREE.Scene();
@@ -18,27 +47,22 @@ function init() {
 
 
     var img = new THREE.MeshBasicMaterial({
-        map:THREE.ImageUtils.loadTexture('./img/juno.jpg')
+        map:THREE.ImageUtils.loadTexture('./img/crate.jpg'),
+		overdraw: true
     });
-    img.map.needsUpdate = true;
 
-
-    material = new THREE.MeshBasicMaterial({ 
-		map: THREE.ImageUtils.loadTexture('./img/juno.jpg', {},
-				 function() {
-			install();
-		}) 
-	});
-	material.map.needsUpdate = true;
+	imgMat = img;
 
     object = new THREE.Mesh(
 			//new THREE.SphereGeometry(10, 5, 5), 
-			//new THREE.CubeGeometry(500, 500, 500),
-			new THREE.PlaneGeometry(500, 500),
-			material);
+			new THREE.CubeGeometry(500, 500, 500),
+			//new THREE.PlaneGeometry(500, 500),
+			img);
+	object.overdraw = true;
+	scene.add(object);
 
     plane = new THREE.Mesh(
-			new THREE.CubeGeometry(200, 200,200), 
+			new THREE.CubeGeometry(500, 500, 500), 
 			//new THREE.PlaneGeometry(200, 200), 
 			img);
     plane.overdraw = true;
@@ -46,25 +70,25 @@ function init() {
     scene.add(plane);
 
 
+	test = new Model();
+	test.addTo(scene);
 
 
-	var install = function() {
-		$(window).load(function() {
+
+
+	$(window).load(function() {
 
 			renderer = new THREE.CanvasRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
 		
-			scene.add(object);
+			var light = new THREE.DirectionalLight(0xff0000);
+			light.position.set(1, 1, 1).normalize();
+			scene.add(light);
 
-			var directionalLight = new THREE.DirectionalLight(0xff0000);
-			directionalLight.position.set(1, 1, 1).normalize();
-			scene.add(directionalLight);
-
-			document.body.appendChild( renderer.domElement );
+			document.body.appendChild(renderer.domElement);
 
 			animate();	
 		});
-	}
 }
 
 function animate() {
