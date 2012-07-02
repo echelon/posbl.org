@@ -7,9 +7,11 @@ var mat, cube, mat2;
 var text2;
 var sphere, mat3, object, plane;
 
+var objects = [];
+
 var imgMat;
 
-var DEFAULT_IMAGE = './img/crate.jpg';
+var DEFAULT_IMAGE = './img/juno.jpg';
 
 /**
  * Model class.
@@ -22,7 +24,7 @@ var Model = function(mat, texture, geo) {
 	});
 
 	this.object = new THREE.Mesh(
-			geo || new THREE.CubeGeometry(100, 100, 100),
+			geo || new THREE.CubeGeometry(200, 200, 200),
 			this.mat);
 
 	this.addTo = function(scene) {
@@ -33,6 +35,12 @@ var Model = function(mat, texture, geo) {
 		this.object.rotation.x += x;
 		this.object.rotation.y += y;
 		this.object.rotation.z += z;
+	}
+
+	this.setPosition = function(x, y, z) {
+		this.object.position.x = x || 0;
+		this.object.position.y = y || 0;
+		this.object.position.z = z || 0;
 	}
 }
 
@@ -45,33 +53,18 @@ function init() {
 	camera.position.z = 1000;
 	scene.add( camera );
 
+	var off = -500;
+	for(var i = 0; i < 10; i++) {
+		var mod = new Model();
 
-    var img = new THREE.MeshBasicMaterial({
-        map:THREE.ImageUtils.loadTexture('./img/crate.jpg'),
-		overdraw: true
-    });
+		mod.setPosition(off, off, off);
+		off += 100;
 
-	imgMat = img;
+		mod.addTo(scene);
+		objects.push(mod);
+	}
 
-    object = new THREE.Mesh(
-			//new THREE.SphereGeometry(10, 5, 5), 
-			new THREE.CubeGeometry(500, 500, 500),
-			//new THREE.PlaneGeometry(500, 500),
-			img);
-	object.overdraw = true;
-	scene.add(object);
-
-    plane = new THREE.Mesh(
-			new THREE.CubeGeometry(500, 500, 500), 
-			//new THREE.PlaneGeometry(200, 200), 
-			img);
-    plane.overdraw = true;
-	plane.position.x = 800;
-    scene.add(plane);
-
-
-	test = new Model();
-	test.addTo(scene);
+	objects[objects.length-1].addTo(scene);
 
 
 
@@ -104,13 +97,14 @@ function render() {
 	/*mesh.rotation.x += 0.01;
 	mesh.rotation.y += 0.02;*/
 
-	plane.rotation.x += 0.01;
-	plane.rotation.y += 0.01;
-	plane.rotation.z += 0.01;
+	var x, y, z;
+	x = 0.01;
+	y = 0.01;
+	z = 0.01;
+	for(var i = 0; i < objects.length; i++) {
+		objects[i].offsetRotation(x, y, z);
+	}
 
-	object.rotation.x += 0.01;
-	object.rotation.y += 0.01;
-	object.rotation.z += 0.01;
 
 	renderer.render( scene, camera );
 
