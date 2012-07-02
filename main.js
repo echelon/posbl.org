@@ -13,63 +13,21 @@ var imgMat;
 
 var IMAGES = [
 	'./img/old/box_cube.png',
-	'./img/old/box_gene.png',
 	'./img/old/box_lightning.png',
 	'./img/old/box_phage.png',
 	'./img/old/box_reactor.png',
 	'./img/old/box_sunspot.png',
-	'./img/old/box_machinecode.png',
 ];
 
 var DEFAULT_IMAGE = './img/juno.jpg';
 
-var RADIUS = 300;
-var STEP = 150;
+var RADIUS = 900;
+var STEP = 100;
 
 var particles = [];
 
-
-
-var Particle = function(img)
-{
-	/*this.particle = new THREE.Particle(new THREE.ParticleBasicMaterial({
-			map: THREE.ImageUtils.loadTexture(img)
-	}));*/
-
-	this.mat = new THREE.MeshBasicMaterial({
-		map: THREE.ImageUtils.loadTexture(img),
-		overdraw: true
-	});
-
-	this.particle= new THREE.Mesh(
-			new THREE.CubeGeometry(100, 100, 100),
-			this.mat);
-
-	this.particle.scale.x = 2.0;
-	this.particle.scale.y = 2.0;
-	this.particle.scale.z = 2.0;
-
-	this.add = function(scene) {
-		scene.add(this.particle);
-	}
-
-	this.circlePos = function(i) {
-		this.trigPos = i;
-		this.particle.position.y = Math.sin(i) * RADIUS;
-		this.particle.position.z = Math.cos(i) * RADIUS;
-	}
-
-	this.updateCirclePos = function(i) {
-		i += this.trigPos;
-		//this.trigPos = i;
-		this.particle.position.y = Math.sin(i) * RADIUS;
-		this.particle.position.z = Math.cos(i) * RADIUS;
-
-		this.particle.rotation.x = i;
-		this.particle.rotation.y = i;
-		this.particle.rotation.z = i;
-	}
-}
+var mouseX = 0;
+var mouseY = 0;
 
 function init() {
 
@@ -97,26 +55,54 @@ function init() {
 		return IMAGES[Math.floor(Math.random()*IMAGES.length)];
 	}
 
+	var clusterAX = -500;
+	var clusterAY = -500;
+	var clusterAZ = -500;
+
 	var j = 0;
 	var k = - window.innerWidth* 3;
-	for(var i = 0; i < 50; i++) 
+	for(var i = 0; i < 6; i++) 
 	{
-		particle = new Particle(randomImage()),
-		//particle.position.y = Math.sin(j) * RADIUS;
-		//particle.position.z = Math.cos(j) * RADIUS;
-		particle.particle.position.x = k;
-		//
-		particle.circlePos(k);
+		var p = new Particle(randomImage());
+		p.add(scene);
+		particles.push(p);
 
-		j += 0.5;
+		p.circlePos(k);
 		k += STEP;
-		
-		particle.add(scene);
-		particles.push(particle);
+
+		p.particle.position.x = clusterAX + Math.random()*500 - 250;
+		p.particle.position.y = clusterAY + Math.random()*500 - 250;
+		p.particle.position.z = clusterAZ + Math.random()*500 - 250;
+	}
+
+
+	var clusterAX = 500;
+	var clusterAY = 200;
+	var clusterAZ = 100;
+
+	var j = 0;
+	var k = - window.innerWidth* 3;
+	for(var i = 0; i < 4; i++) 
+	{
+		var p = new Particle(randomImage());
+		p.add(scene);
+		particles.push(p);
+
+		p.circlePos(k);
+		k += STEP;
+
+		p.particle.position.x = clusterAX + Math.random()*600 - 300;
+		p.particle.position.y = clusterAY + Math.random()*600 - 300;
+		p.particle.position.z = clusterAZ + Math.random()*600 - 300;
 	}
 
 
 
+
+	$(window).mousemove(function(event) {
+		mouseX = event.pageX;
+		mouseY = event.pageY;
+	});
 
 	$(window).load(function() {
 
@@ -155,8 +141,8 @@ function render() {
 		objects[i].offsetRotation(x, y, z);
 	}*/
 
-	//camera.position.z += Math.sin(u) * 10;
-	//camera.position.y += Math.cos(u) * 10;
+	camera.position.x += (mouseX - camera.position.x) * 0.05;
+	camera.position.y += (-mouseY - camera.position.y) * 0.05;
 
 	for(var i = 0; i < particles.length; i++) {
 		particles[i].updateCirclePos(u);
