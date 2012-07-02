@@ -24,7 +24,7 @@ var IMAGES = [
 var DEFAULT_IMAGE = './img/juno.jpg';
 
 var RADIUS = 300;
-var STEP = 100;
+var STEP = 150;
 
 var particles = [];
 
@@ -32,9 +32,22 @@ var particles = [];
 
 var Particle = function(img)
 {
-	this.particle = new THREE.Particle(new THREE.ParticleBasicMaterial({
+	/*this.particle = new THREE.Particle(new THREE.ParticleBasicMaterial({
 			map: THREE.ImageUtils.loadTexture(img)
-	}));
+	}));*/
+
+	this.mat = new THREE.MeshBasicMaterial({
+		map: THREE.ImageUtils.loadTexture(img),
+		overdraw: true
+	});
+
+	this.particle= new THREE.Mesh(
+			new THREE.CubeGeometry(100, 100, 100),
+			this.mat);
+
+	this.particle.scale.x = 2.0;
+	this.particle.scale.y = 2.0;
+	this.particle.scale.z = 2.0;
 
 	this.add = function(scene) {
 		scene.add(this.particle);
@@ -42,15 +55,19 @@ var Particle = function(img)
 
 	this.circlePos = function(i) {
 		this.trigPos = i;
-		this.particle.position.x = Math.sin(i) * RADIUS;
-		this.particle.position.y = Math.cos(i) * RADIUS;
+		this.particle.position.y = Math.sin(i) * RADIUS;
+		this.particle.position.z = Math.cos(i) * RADIUS;
 	}
 
 	this.updateCirclePos = function(i) {
 		i += this.trigPos;
-		this.trigPos = i;
-		this.particle.position.x = Math.sin(i) * RADIUS;
-		this.particle.position.y = Math.cos(i) * RADIUS;
+		//this.trigPos = i;
+		this.particle.position.y = Math.sin(i) * RADIUS;
+		this.particle.position.z = Math.cos(i) * RADIUS;
+
+		this.particle.rotation.x = i;
+		this.particle.rotation.y = i;
+		this.particle.rotation.z = i;
 	}
 }
 
@@ -81,13 +98,13 @@ function init() {
 	}
 
 	var j = 0;
-	var k = -800;
+	var k = - window.innerWidth* 3;
 	for(var i = 0; i < 50; i++) 
 	{
 		particle = new Particle(randomImage()),
 		//particle.position.y = Math.sin(j) * RADIUS;
 		//particle.position.z = Math.cos(j) * RADIUS;
-		particle.particle.position.z = k;
+		particle.particle.position.x = k;
 		//
 		particle.circlePos(k);
 
@@ -145,7 +162,7 @@ function render() {
 		particles[i].updateCirclePos(u);
 		//u += 0.001;
 	}
-	u += 0.00005;
+	u += 0.005;
 
 
 	renderer.render( scene, camera );
