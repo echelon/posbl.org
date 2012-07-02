@@ -33,7 +33,7 @@ var particles = [];
 var Particle = function(img)
 {
 	this.particle = new THREE.Particle(new THREE.ParticleBasicMaterial({
-			map: THREE.ImageUtils.loadTexture(img),
+			map: THREE.ImageUtils.loadTexture(img)
 	}));
 
 	this.add = function(scene) {
@@ -41,6 +41,14 @@ var Particle = function(img)
 	}
 
 	this.circlePos = function(i) {
+		this.trigPos = i;
+		this.particle.position.x = Math.sin(i) * RADIUS;
+		this.particle.position.y = Math.cos(i) * RADIUS;
+	}
+
+	this.updateCirclePos = function(i) {
+		i += this.trigPos;
+		this.trigPos = i;
 		this.particle.position.x = Math.sin(i) * RADIUS;
 		this.particle.position.y = Math.cos(i) * RADIUS;
 	}
@@ -76,20 +84,17 @@ function init() {
 	var k = -800;
 	for(var i = 0; i < 50; i++) 
 	{
-		particle = new THREE.Particle(new THREE.ParticleBasicMaterial({
-			map: THREE.ImageUtils.loadTexture(randomImage()),
-		}));
-		particle.scale.x = 2;
-		particle.scale.y = 2;
-		particle.position.y = Math.sin(j) * RADIUS;
-		particle.position.z = Math.cos(j) * RADIUS;
-		particle.position.x = k;
+		particle = new Particle(randomImage()),
+		//particle.position.y = Math.sin(j) * RADIUS;
+		//particle.position.z = Math.cos(j) * RADIUS;
+		particle.particle.position.z = k;
+		//
+		particle.circlePos(k);
 
 		j += 0.5;
 		k += STEP;
-		//particle.position.z = Math.random() * 2000 - 1000;
 		
-		scene.add(particle);
+		particle.add(scene);
 		particles.push(particle);
 	}
 
@@ -137,11 +142,11 @@ function render() {
 	//camera.position.y += Math.cos(u) * 10;
 
 	for(var i = 0; i < particles.length; i++) {
-		particles[i].position.y += Math.sin(u);
-		particles[i].position.z += Math.cos(u);
+		particles[i].updateCirclePos(u);
+		//u += 0.001;
 	}
+	u += 0.00005;
 
-	u += 0.01;
 
 	renderer.render( scene, camera );
 
