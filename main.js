@@ -24,10 +24,24 @@ var DEFAULT_IMAGE = './img/juno.jpg';
 var RADIUS = 900;
 var STEP = 100;
 
-var particles = [];
+var PARTICLES = [];
 
 var mouseX = 0;
 var mouseY = 0;
+
+function spawnParticles(x, y, z)
+{
+	for(var i = 0; i < 100; i++) {
+		var p = new Particle();
+		p.add(scene);
+		p.spawn(
+				x || 0,
+				y || 0,
+				z || 0
+		);
+		PARTICLES.push(p);
+	}
+}
 
 function init() {
 
@@ -38,66 +52,8 @@ function init() {
 	camera.position.z = 1500;
 	scene.add( camera );
 
-	/*var off = -500;
-	for(var i = 0; i < 10; i++) {
-		var mod = new Model();
 
-		mod.setPosition(off, off, off);
-		off += 100;
-
-		mod.addTo(scene);
-		objects.push(mod);
-	}
-
-	objects[objects.length-1].addTo(scene);*/
-
-	var randomImage = function() {
-		return IMAGES[Math.floor(Math.random()*IMAGES.length)];
-	}
-
-	var clusterAX = -500;
-	var clusterAY = -500;
-	var clusterAZ = -500;
-
-	var j = 0;
-	var k = - window.innerWidth* 3;
-	for(var i = 0; i < 6; i++) 
-	{
-		var p = new Particle(randomImage());
-		p.add(scene);
-		particles.push(p);
-
-		p.circlePos(k);
-		k += STEP;
-
-		p.particle.position.x = clusterAX + Math.random()*500 - 250;
-		p.particle.position.y = clusterAY + Math.random()*500 - 250;
-		p.particle.position.z = clusterAZ + Math.random()*500 - 250;
-	}
-
-
-	var clusterAX = 500;
-	var clusterAY = 200;
-	var clusterAZ = 100;
-
-	var j = 0;
-	var k = - window.innerWidth* 3;
-	for(var i = 0; i < 4; i++) 
-	{
-		var p = new Particle(randomImage());
-		p.add(scene);
-		particles.push(p);
-
-		p.circlePos(k);
-		k += STEP;
-
-		p.particle.position.x = clusterAX + Math.random()*600 - 300;
-		p.particle.position.y = clusterAY + Math.random()*600 - 300;
-		p.particle.position.z = clusterAZ + Math.random()*600 - 300;
-	}
-
-
-
+	spawnParticles();
 
 	$(window).mousemove(function(event) {
 		mouseX = event.pageX;
@@ -144,13 +100,16 @@ function render() {
 	camera.position.x += (mouseX - camera.position.x) * 0.05;
 	camera.position.y += (-mouseY - camera.position.y) * 0.05;
 
-	for(var i = 0; i < particles.length; i++) {
-		particles[i].updateCirclePos(u);
-		//u += 0.001;
+	for(var i = 0; i < PARTICLES.length; i++) {
+		PARTICLES[i].move();
 	}
-	u += 0.005;
 
+	if(Math.floor(rand(0, 20)) == 0) {
+		var x = rand(-500, 500);
+		var y = rand(-500, 500);
+		var z = rand(-500, 500);
+		spawnParticles(x, y, z);
+	}
 
 	renderer.render( scene, camera );
-
 }
