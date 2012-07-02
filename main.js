@@ -11,36 +11,38 @@ var objects = [];
 
 var imgMat;
 
+var IMAGES = [
+	'./img/old/box_cube.png',
+	'./img/old/box_gene.png',
+	'./img/old/box_lightning.png',
+	'./img/old/box_phage.png',
+	'./img/old/box_reactor.png',
+	'./img/old/box_sunspot.png',
+	'./img/old/box_machinecode.png',
+];
+
 var DEFAULT_IMAGE = './img/juno.jpg';
 
-/**
- * Model class.
- */
-var Model = function(mat, texture, geo) {
+var RADIUS = 300;
+var STEP = 100;
 
-	this.mat = mat || new THREE.MeshBasicMaterial({
-		map: texture || THREE.ImageUtils.loadTexture(DEFAULT_IMAGE),
-		overdraw: true
-	});
+var particles = [];
 
-	this.object = new THREE.Mesh(
-			geo || new THREE.CubeGeometry(200, 200, 200),
-			this.mat);
 
-	this.addTo = function(scene) {
-		scene.add(this.object);
+
+var Particle = function(img)
+{
+	this.particle = new THREE.Particle(new THREE.ParticleBasicMaterial({
+			map: THREE.ImageUtils.loadTexture(img),
+	}));
+
+	this.add = function(scene) {
+		scene.add(this.particle);
 	}
 
-	this.offsetRotation = function(x, y, z) {
-		this.object.rotation.x += x;
-		this.object.rotation.y += y;
-		this.object.rotation.z += z;
-	}
-
-	this.setPosition = function(x, y, z) {
-		this.object.position.x = x || 0;
-		this.object.position.y = y || 0;
-		this.object.position.z = z || 0;
+	this.circlePos = function(i) {
+		this.particle.position.x = Math.sin(i) * RADIUS;
+		this.particle.position.y = Math.cos(i) * RADIUS;
 	}
 }
 
@@ -50,10 +52,10 @@ function init() {
 
 	camera = new THREE.PerspectiveCamera( 75, 
 			window.innerWidth / window.innerHeight, 1, 10000 );
-	camera.position.z = 1000;
+	camera.position.z = 1500;
 	scene.add( camera );
 
-	var off = -500;
+	/*var off = -500;
 	for(var i = 0; i < 10; i++) {
 		var mod = new Model();
 
@@ -64,7 +66,32 @@ function init() {
 		objects.push(mod);
 	}
 
-	objects[objects.length-1].addTo(scene);
+	objects[objects.length-1].addTo(scene);*/
+
+	var randomImage = function() {
+		return IMAGES[Math.floor(Math.random()*IMAGES.length)];
+	}
+
+	var j = 0;
+	var k = -800;
+	for(var i = 0; i < 50; i++) 
+	{
+		particle = new THREE.Particle(new THREE.ParticleBasicMaterial({
+			map: THREE.ImageUtils.loadTexture(randomImage()),
+		}));
+		particle.scale.x = 2;
+		particle.scale.y = 2;
+		particle.position.y = Math.sin(j) * RADIUS;
+		particle.position.z = Math.cos(j) * RADIUS;
+		particle.position.x = k;
+
+		j += 0.5;
+		k += STEP;
+		//particle.position.z = Math.random() * 2000 - 1000;
+		
+		scene.add(particle);
+		particles.push(particle);
+	}
 
 
 
@@ -92,19 +119,29 @@ function animate() {
 
 }
 
+var u = 0;
 function render() {
 
 	/*mesh.rotation.x += 0.01;
 	mesh.rotation.y += 0.02;*/
 
-	var x, y, z;
+	/*var x, y, z;
 	x = 0.01;
 	y = 0.01;
 	z = 0.01;
 	for(var i = 0; i < objects.length; i++) {
 		objects[i].offsetRotation(x, y, z);
+	}*/
+
+	//camera.position.z += Math.sin(u) * 10;
+	//camera.position.y += Math.cos(u) * 10;
+
+	for(var i = 0; i < particles.length; i++) {
+		particles[i].position.y += Math.sin(u);
+		particles[i].position.z += Math.cos(u);
 	}
 
+	u += 0.01;
 
 	renderer.render( scene, camera );
 
