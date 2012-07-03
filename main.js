@@ -13,6 +13,8 @@ var mouseY = 0;
 var block;
 var blocks = [];
 
+var matStack = new MatrixStack();
+
 function init() {
 
 	scene = new THREE.Scene();
@@ -22,12 +24,41 @@ function init() {
 	camera.position.z = 1000;
 	scene.add( camera );
 
-	block = new Block();
-	block.add(scene);
-	//block.object.updateMatrix();
-	blocks.push(block);
+	var newBlock = function() {
+		var block = new Block();
+		block.add(scene);
+		block.object.updateMatrix();
+		blocks.push(block);
+		return block;
+	}
 
-	/*block = new Block();
+	// First block 
+	block = newBlock();
+
+	// Second block
+	block = newBlock();
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 0, y: 210, z: 0});
+	block.object.matrix.multiplySelf(mat);
+
+	// Third block
+	block = newBlock();
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 0, y: 210, z: 0});
+	block.object.matrix.multiplySelf(mat);
+
+	matStack.pop();
+	matStack.pop();
+
+	// Fourth block
+	block = newBlock();
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+
+
+
+/*	block = new Block();
 	block.add(scene);
 	block.object.position.x = 212;
 	block.object.updateMatrix();
@@ -44,12 +75,16 @@ function init() {
 		move();
 	});
 
-	/*$(window).mousemove(function(event) {
+	$('body').click(function(event) {
+		$('input').focus();
+	});
+
+	$(window).mousemove(function(event) {
 		lastX = mouseX;
 		lastY = mouseY;
 		mouseX = event.pageX;
 		mouseY = event.pageY;
-	});*/
+	});
 	
 	$(window).load(function() {
 
@@ -63,6 +98,14 @@ function init() {
 		scene.add(light);
 
 		document.body.appendChild(renderer.domElement);
+
+		var help = new THREE.AxisHelper();
+		help.position.x = -500;
+		help.position.y = -500;
+		scene.add(help);
+
+		var camHelp = new THREE.CameraHelper(camera);
+		scene.add(camHelp);
 
 		animate();	
 	});
@@ -83,8 +126,8 @@ function move()
 			block.object.updateMatrix();
 
 			mat.rotateX(oldAngle.x);
-			mat.rotateY(oldAngle.y);
-			mat.rotateZ(oldAngle.z);
+			//mat.rotateY(oldAngle.y);
+			//mat.rotateZ(oldAngle.z);
 
 			block.object.matrix.multiplySelf(mat);
 		})
@@ -102,15 +145,8 @@ function render()
 {
 	TWEEN.update();
 
-	//for(var i = 0; i < blocks[i].length; i++) {
-	//	blocks[i].object.updateMatrix();
-	//}
-	//camera.position.x += (mouseX - camera.position.x) * 0.05;
+	camera.position.x += (mouseX - camera.position.x) * 0.01;
 	//camera.position.y += (-mouseY - camera.position.y) * 0.05;
 
-	/*block.object.rotation.x += 0.001;
-	block.object.rotation.y += 0.001;
-	block.object.rotation.z += 0.001;*/
-	
 	renderer.render(scene, camera);
 }
