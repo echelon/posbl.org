@@ -68,56 +68,9 @@ function init() {
 	});
 }
 
-var y = 0.0;
-
 function move() 
 {
-
-	/** XXX: WORKS -- 
 	var block = blocks[0];
-
-	block.object.updateMatrix();
-
-	var mat = new THREE.Matrix4();
-	mat.rotateX(Math.PI/7);
-	mat.rotateY(Math.PI/5);
-	mat.rotateZ(Math.PI/3);
-
-	block.object.matrix.multiplySelf(mat);
-	*/
-
-
-	// TODO: Tween with matrices
-
-	var actAngle = 0;
-	var curAngle = { angle: 0 };
-	var targetAngle = { angle: Math.PI / 2 };
-
-	/*var tween = new TWEEN.Tween(curAngle)
-		.to(targetAngle, 1000)
-		.onUpdate(function() {
-			var diff = Math.abs(curAngle.angle - actAngle);
-			actAngle = curAngle.angle;
-
-
-			var d = diff * (Math.PI/180) * 10000;
-
-			var block = blocks[0];
-			block.object.updateMatrix();
-
-			//var updateMatrix = block.object.matrix.clone();
-			var updateMatrix = new THREE.Matrix4();
-			updateMatrix.rotateZ(diff);
-
-			block.object.matrix.multiplySelf(updateMatrix);
-		
-		})
-		.start();*/
-
-
-	var block = blocks[0];
-
-	angleNew = Math.PI / 2;
 
 	var oldAngle = {x: 0, y:0, z:0};
 	var newAngle = {x: Math.PI/2, y: Math.PI/2, z: Math.PI /2};
@@ -126,34 +79,27 @@ function move()
 		.to(newAngle, 2000)
 		.easing(TWEEN.Easing.Elastic.Out)
 		.onUpdate(function() {
-
-			block.object.updateMatrix();
 			var mat = new THREE.Matrix4();
+			block.object.updateMatrix();
 
 			mat.rotateX(oldAngle.x);
 			mat.rotateY(oldAngle.y);
 			mat.rotateZ(oldAngle.z);
 
 			block.object.matrix.multiplySelf(mat);
-			
 		})
 		.start();
-
-
-
 }
 
-function animate() {
-
-	// note: three.js includes requestAnimationFrame shim
-	requestAnimationFrame( animate );
+function animate()
+{
+	requestAnimationFrame(animate);
 	render();
-
 }
 
 var y = 0.0;
-function render() {
-	
+function render()
+{
 	TWEEN.update();
 
 	//for(var i = 0; i < blocks[i].length; i++) {
@@ -166,6 +112,5 @@ function render() {
 	block.object.rotation.y += 0.001;
 	block.object.rotation.z += 0.001;*/
 	
-	renderer.render( scene, camera );
-
+	renderer.render(scene, camera);
 }
