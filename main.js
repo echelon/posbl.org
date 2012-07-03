@@ -37,25 +37,26 @@ function init() {
 
 	// Second block
 	block = newBlock();
-	matStack.pushNew();
-	var mat = matStack.top().translate({x: 0, y: 210, z: 0});
-	block.object.matrix.multiplySelf(mat);
+	//matStack.pushNew();
+	//var mat = matStack.top().translate({x: 0, y: 210, z: 0});
+	//block.object.matrix.multiplySelf(mat);
 
 	// Third block
 	block = newBlock();
-	matStack.pushNew();
-	var mat = matStack.top().translate({x: 0, y: 210, z: 0});
-	block.object.matrix.multiplySelf(mat);
+	//matStack.pushNew();
+	//var mat = matStack.top().translate({x: 0, y: 210, z: 0});
+	//block.object.matrix.multiplySelf(mat);
 
-	matStack.pop();
-	matStack.pop();
+	//matStack.pop();
+	//matStack.pop();
 
 	// Fourth block
 	block = newBlock();
-	matStack.pushNew();
-	var mat = matStack.top().translate({x: 210, y: 0, z: 0});
-	block.object.matrix.multiplySelf(mat);
+	//matStack.pushNew();
+	//var mat = matStack.top().translate({x: 210, y: 0, z: 0});
+	//block.object.matrix.multiplySelf(mat);
 
+	//matStack.pop();
 
 
 /*	block = new Block();
@@ -122,14 +123,15 @@ function move()
 		.to(newAngle, 2000)
 		.easing(TWEEN.Easing.Elastic.Out)
 		.onUpdate(function() {
-			var mat = new THREE.Matrix4();
+			//var mat = new THREE.Matrix4(); // works ("A")
 			block.object.updateMatrix();
+			var mat = block.object.matrix; // XXX: Weird error. 
 
 			mat.rotateX(oldAngle.x);
-			//mat.rotateY(oldAngle.y);
-			//mat.rotateZ(oldAngle.z);
+			mat.rotateY(oldAngle.y);
+			mat.rotateZ(oldAngle.z);
 
-			block.object.matrix.multiplySelf(mat);
+			//block.object.matrix.multiplySelf(mat); // works with (A)
 		})
 		.start();
 }
@@ -140,10 +142,44 @@ function animate()
 	render();
 }
 
-var y = 0.0;
 function render()
 {
 	TWEEN.update();
+
+	// First block 
+	block = blocks[0];
+
+	// Second block
+	block = blocks[1];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 0, y: 210, z: 0});
+	block.object.matrix.multiplySelf(mat);
+
+	// Third block
+	block = blocks[2];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 0, y: 210, z: 0});
+	block.object.matrix.multiplySelf(mat);
+
+	matStack.pop();
+	matStack.pop();
+
+	// Fourth block
+	block = blocks[3];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+
+	matStack.pop();
+
+
+
+
+
+
+
+
+
 
 	camera.position.x += (mouseX - camera.position.x) * 0.01;
 	//camera.position.y += (-mouseY - camera.position.y) * 0.05;
