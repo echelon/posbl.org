@@ -73,6 +73,7 @@ var y = 0.0;
 function move() 
 {
 
+	/** XXX: WORKS -- 
 	var block = blocks[0];
 
 	block.object.updateMatrix();
@@ -83,14 +84,7 @@ function move()
 	mat.rotateZ(Math.PI/3);
 
 	block.object.matrix.multiplySelf(mat);
-	//block.object.matrix.setRotation(0, 500, 0);
-
-
-	/*var updateMatrix = block.object.matrix.clone();
-  	updateMatrix.rotateZ(y);
-	block.object.matrix.multiplySelf(updateMatrix);
-	y += 0.05;*/
-
+	*/
 
 
 	// TODO: Tween with matrices
@@ -120,6 +114,9 @@ function move()
 		})
 		.start();*/
 
+
+	var block = blocks[0];
+
 	angleNew = Math.PI / 2;
 
 	var oldAngle = {x: 0, y:0, z:0};
@@ -129,6 +126,15 @@ function move()
 		.to(newAngle, 2000)
 		.easing(TWEEN.Easing.Elastic.Out)
 		.onUpdate(function() {
+
+			block.object.updateMatrix();
+			var mat = new THREE.Matrix4();
+
+			mat.rotateX(oldAngle.x);
+			mat.rotateY(oldAngle.y);
+			mat.rotateZ(oldAngle.z);
+
+			block.object.matrix.multiplySelf(mat);
 			
 		})
 		.start();
@@ -148,9 +154,7 @@ function animate() {
 var y = 0.0;
 function render() {
 	
-	//TWEEN.update();
-
-
+	TWEEN.update();
 
 	//for(var i = 0; i < blocks[i].length; i++) {
 	//	blocks[i].object.updateMatrix();
