@@ -37,6 +37,10 @@ var Block = function(color, size)
 		this.mat
 	);
 
+	this.object.castShadow = true;
+	this.object.receiveShadow = true;
+	this.object.matrixAutoUpdate = false;
+
 	this.add = function(scene) {
 		scene.add(this.object);
 	}

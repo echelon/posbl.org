@@ -24,17 +24,20 @@ function init() {
 
 	block = new Block();
 	block.add(scene);
+	//block.object.updateMatrix();
 	blocks.push(block);
 
-	block = new Block();
+	/*block = new Block();
 	block.add(scene);
 	block.object.position.x = 212;
+	block.object.updateMatrix();
 	blocks.push(block);
 
 	block = new Block();
 	block.add(scene);
 	block.object.position.x = 424;
-	blocks.push(block);
+	block.object.updateMatrix();
+	blocks.push(block);*/
 
 	$('input').focus();
 	$('input').keypress(function(event) {
@@ -54,8 +57,9 @@ function init() {
 		renderer.setSize( window.innerWidth, 
 			window.innerHeight );
 	
-		var light = new THREE.DirectionalLight(0xff0000);
-		light.position.set(1, 1, 1).normalize();
+		var light = new THREE.DirectionalLight(0xffffff);
+		light.position.set(1, 0, 0).normalize();
+		light.castShadow = true; // TODO
 		scene.add(light);
 
 		document.body.appendChild(renderer.domElement);
@@ -65,6 +69,29 @@ function init() {
 }
 
 function move() {
+
+	var block = blocks[0];
+
+	//block.object.updateMatrix();
+	//var mat = block.object.matrix.clone();
+
+	var mat = new THREE.Matrix4();
+
+	mat.rotateX(Math.PI);
+	//updateMatrix.translate(new THREE.Vector3(0, 150, 0));
+
+	block.object.matrix.multiplySelf(mat);
+	block.object.matrix.setRotation(0,500, 0);
+
+	//block.object.position.x += 10;
+
+	//block.object.updateMatrix();
+	//block.object.updateMatrixWorld(true);
+	
+
+	// TODO: Tween with matrices
+
+/*
 	var actAngle = 0;
 	var curAngle = { angle: 0 };
 	var targetAngle = { angle: Math.PI / 2 };
@@ -76,14 +103,28 @@ function move() {
 
 			for(var i = 0; i < blocks.length; i++) {
 				var d = diff * (Math.PI/180);
+				var block = blocks[i];
 
-				blocks[i].object.rotation.x += diff;
-				blocks[i].object.rotation.y += diff;
-				blocks[i].object.rotation.z += diff;
+				//blocks[i].object.rotation.x += diff;
+				//blocks[i].object.rotation.y += diff;
+				//blocks[i].object.rotation.z += diff;
+
+				block.object.updateMatrix();
+				var updateMatrix = block.object.matrix.clone();
+
+				//updateMatrix.rotateX(diff);   
+				//updateMatrix.rotateY(diff);   
+				//updateMatrix.rotateZ(diff);   
+				updateMatrix.translate(new THREE.Vector3(0, 150, 0));
+
+				block.object.matrix.multiplySelf(updateMatrix);
+
+				//blocks[i].updateMatrix();
 			}
-			
+		
 		})
 		.start();
+*/
 }
 
 function animate() {
@@ -94,13 +135,34 @@ function animate() {
 
 }
 
+y = 0.0;
 function render() {
+
+	//block.object.updateMatrix();
+
+	//for(var i = 0; i < blocks[i].length; i++) {
+	//	blocks[i].object.updateMatrix();
+	//}
 	//camera.position.x += (mouseX - camera.position.x) * 0.05;
 	//camera.position.y += (-mouseY - camera.position.y) * 0.05;
 
 	/*block.object.rotation.x += 0.001;
 	block.object.rotation.y += 0.001;
 	block.object.rotation.z += 0.001;*/
+
+	var block = blocks[0];
+	block.object.updateMatrix();
+
+	var updateMatrix = block.object.matrix.clone();
+
+	y += 0.01;
+	updateMatrix.rotateZ(y);   
+	//updateMatrix.translate(new THREE.Vector3(0, 150, 0));
+
+	block.object.matrix.multiplySelf(updateMatrix);
+
+
+
 
 	renderer.render( scene, camera );
 
