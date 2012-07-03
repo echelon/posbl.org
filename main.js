@@ -70,7 +70,26 @@ function init() {
 
 var y = 0.0;
 
-function move() {
+function move() 
+{
+
+	var block = blocks[0];
+
+	block.object.updateMatrix();
+
+	var mat = new THREE.Matrix4();
+	mat.rotateX(Math.PI/7);
+	mat.rotateY(Math.PI/5);
+	mat.rotateZ(Math.PI/3);
+
+	block.object.matrix.multiplySelf(mat);
+	//block.object.matrix.setRotation(0, 500, 0);
+
+
+	/*var updateMatrix = block.object.matrix.clone();
+  	updateMatrix.rotateZ(y);
+	block.object.matrix.multiplySelf(updateMatrix);
+	y += 0.05;*/
 
 
 
@@ -101,19 +120,21 @@ function move() {
 		})
 		.start();*/
 
-	var block = blocks[0];
 	angleNew = Math.PI / 2;
-	new TWEEN.Tween(block.object.rotation)
-		.to({
-			x: angleNew,
-			y: angleNew,
-			z: angleNew
-		}, 2000)
+
+	var oldAngle = {x: 0, y:0, z:0};
+	var newAngle = {x: Math.PI/2, y: Math.PI/2, z: Math.PI /2};
+
+	new TWEEN.Tween(oldAngle)
+		.to(newAngle, 2000)
 		.easing(TWEEN.Easing.Elastic.Out)
-		/*.onUpdate(function() {
-			//block.object.updateMatrix();
-		})*/
+		.onUpdate(function() {
+			
+		})
 		.start();
+
+
+
 }
 
 function animate() {
@@ -124,12 +145,12 @@ function animate() {
 
 }
 
+var y = 0.0;
 function render() {
 	
-	TWEEN.update();
+	//TWEEN.update();
 
-	//var block = blocks[0];
-	//block.object.updateMatrix();
+
 
 	//for(var i = 0; i < blocks[i].length; i++) {
 	//	blocks[i].object.updateMatrix();
