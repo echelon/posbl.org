@@ -44,12 +44,12 @@ function init() {
 		move();
 	});
 
-	$(window).mousemove(function(event) {
+	/*$(window).mousemove(function(event) {
 		lastX = mouseX;
 		lastY = mouseY;
 		mouseX = event.pageX;
 		mouseY = event.pageY;
-	});
+	});*/
 	
 	$(window).load(function() {
 
@@ -68,63 +68,52 @@ function init() {
 	});
 }
 
+var y = 0.0;
+
 function move() {
 
-	var block = blocks[0];
 
-	//block.object.updateMatrix();
-	//var mat = block.object.matrix.clone();
-
-	var mat = new THREE.Matrix4();
-
-	mat.rotateX(Math.PI);
-	//updateMatrix.translate(new THREE.Vector3(0, 150, 0));
-
-	block.object.matrix.multiplySelf(mat);
-	block.object.matrix.setRotation(0,500, 0);
-
-	//block.object.position.x += 10;
-
-	//block.object.updateMatrix();
-	//block.object.updateMatrixWorld(true);
-	
 
 	// TODO: Tween with matrices
 
-/*
 	var actAngle = 0;
 	var curAngle = { angle: 0 };
 	var targetAngle = { angle: Math.PI / 2 };
-	var tween = new TWEEN.Tween(curAngle)
+
+	/*var tween = new TWEEN.Tween(curAngle)
 		.to(targetAngle, 1000)
 		.onUpdate(function() {
 			var diff = Math.abs(curAngle.angle - actAngle);
 			actAngle = curAngle.angle;
 
-			for(var i = 0; i < blocks.length; i++) {
-				var d = diff * (Math.PI/180);
-				var block = blocks[i];
 
-				//blocks[i].object.rotation.x += diff;
-				//blocks[i].object.rotation.y += diff;
-				//blocks[i].object.rotation.z += diff;
+			var d = diff * (Math.PI/180) * 10000;
 
-				block.object.updateMatrix();
-				var updateMatrix = block.object.matrix.clone();
+			var block = blocks[0];
+			block.object.updateMatrix();
 
-				//updateMatrix.rotateX(diff);   
-				//updateMatrix.rotateY(diff);   
-				//updateMatrix.rotateZ(diff);   
-				updateMatrix.translate(new THREE.Vector3(0, 150, 0));
+			//var updateMatrix = block.object.matrix.clone();
+			var updateMatrix = new THREE.Matrix4();
+			updateMatrix.rotateZ(diff);
 
-				block.object.matrix.multiplySelf(updateMatrix);
-
-				//blocks[i].updateMatrix();
-			}
+			block.object.matrix.multiplySelf(updateMatrix);
 		
 		})
+		.start();*/
+
+	var block = blocks[0];
+	angleNew = Math.PI / 2;
+	new TWEEN.Tween(block.object.rotation)
+		.to({
+			x: angleNew,
+			y: angleNew,
+			z: angleNew
+		}, 2000)
+		.easing(TWEEN.Easing.Elastic.Out)
+		/*.onUpdate(function() {
+			//block.object.updateMatrix();
+		})*/
 		.start();
-*/
 }
 
 function animate() {
@@ -135,9 +124,11 @@ function animate() {
 
 }
 
-y = 0.0;
 function render() {
+	
+	TWEEN.update();
 
+	//var block = blocks[0];
 	//block.object.updateMatrix();
 
 	//for(var i = 0; i < blocks[i].length; i++) {
@@ -149,22 +140,7 @@ function render() {
 	/*block.object.rotation.x += 0.001;
 	block.object.rotation.y += 0.001;
 	block.object.rotation.z += 0.001;*/
-
-	var block = blocks[0];
-	block.object.updateMatrix();
-
-	var updateMatrix = block.object.matrix.clone();
-
-	y += 0.01;
-	updateMatrix.rotateZ(y);   
-	//updateMatrix.translate(new THREE.Vector3(0, 150, 0));
-
-	block.object.matrix.multiplySelf(updateMatrix);
-
-
-
-
+	
 	renderer.render( scene, camera );
 
-	TWEEN.update();
 }
