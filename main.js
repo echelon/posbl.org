@@ -26,8 +26,7 @@ function init() {
 
 	// Create the nine Rubik blocks of a single dimension. 
 	// TODO: Colors, data structure, etc.
-	// TODO: All 27.
-	for(var i = 0; i < 9; i++) {
+	for(var i = 0; i < 27; i++) {
 		var block = new Block();
 		block.add(scene);
 		block.object.updateMatrix();
@@ -76,18 +75,25 @@ function init() {
 	});
 }
 
+// XXX/NOTE : Will get out of alignment if called again before 
+// animation finishes
+var oldAngle = {x: 0, y:0, z:0};
 function move() 
 {
 	var block = blocks[0];
 
-	var oldAngle = {x: 0, y:0, z:0};
-	var newAngle = {x: Math.PI, y: Math.PI/2, z: Math.PI /2};
+	//var oldAngle = {x: 0, y:0, z:0};
+	var newAngle = {
+		x: oldAngle.x + Math.PI/2, 
+		y: oldAngle.y + Math.PI/2, 
+		z: oldAngle.z + Math.PI/2
+	};
 
 	//matStack.pushNew();
 	var mat = matStack.top();
 
 	new TWEEN.Tween(oldAngle)
-		.to(newAngle, 1000)
+		.to(newAngle, 600)
 		.easing(TWEEN.Easing.Elastic.Out)
 		.onUpdate(function() {
 
@@ -98,8 +104,8 @@ function move()
 			}
 
 			mat2.rotateX(oldAngle.x);
-			//mat2.rotateY(oldAngle.y);
-			//mat2.rotateZ(oldAngle.z);
+			mat2.rotateY(oldAngle.y);
+			mat2.rotateZ(oldAngle.z);
 
 			//matStack.top().rotateX(oldAngle.x);
 
@@ -193,6 +199,156 @@ function render()
 	matStack.pop();
 
 	matStack.pop(); // Pop row. 
+
+
+	/**
+	 * SECOND DIMENSION
+	 */ 
+
+	// Second dimension, middle row, center
+	block = blocks[9];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 0, y: 0, z: 210});
+	block.object.matrix.multiplySelf(mat);
+	// NO POP DIMENSION. 
+
+	// Second dimension, middle row, right
+	block = blocks[10];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	// Second dimension, middle row, left 
+	block = blocks[11];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: -210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	// Second dimension, top row, center 
+	block = blocks[12];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 0, y: 210, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	// NO POP
+
+	// Second dimension, top row, right
+	block = blocks[13];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	// Second dimension, top row, left 
+	block = blocks[14];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: -210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	matStack.pop(); // Pop row. 
+
+	// Second dimension, bottom row, center 
+	block = blocks[15];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 0, y: -210, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	// NO POP
+
+	// Second dimension, bottom row, right
+	block = blocks[16];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	// Second dimension, bottom row, left 
+	block = blocks[17];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: -210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	matStack.pop(); // Pop row. 
+	matStack.pop(); // Pop dimension.
+
+	/**
+	 * THIRD DIMENSION
+	 */ 
+
+	// Third dimension, middle row, center
+	block = blocks[18];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 0, y: 0, z: -210});
+	block.object.matrix.multiplySelf(mat);
+	// NO POP DIMENSION. 
+
+	// Third dimension, middle row, right
+	block = blocks[19];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	// Third dimension, middle row, left 
+	block = blocks[20];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: -210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	// Third dimension, top row, center 
+	block = blocks[21];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 0, y: 210, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	// NO POP
+
+	// Third dimension, top row, right
+	block = blocks[22];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	// Third dimension, top row, left 
+	block = blocks[23];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: -210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	matStack.pop(); // Pop row. 
+
+	// Third dimension, bottom row, center 
+	block = blocks[24];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 0, y: -210, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	// NO POP
+
+	// Third dimension, bottom row, right
+	block = blocks[25];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	// Third dimension, bottom row, left 
+	block = blocks[26];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: -210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	matStack.pop(); // Pop row. 
+	matStack.pop(); // Pop dimension.
+
+
+
+
+
 
 
 
