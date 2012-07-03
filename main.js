@@ -117,19 +117,33 @@ function move()
 	var block = blocks[0];
 
 	var oldAngle = {x: 0, y:0, z:0};
-	var newAngle = {x: Math.PI/2, y: Math.PI/2, z: Math.PI /2};
+	var newAngle = {x: Math.PI, y: Math.PI/2, z: Math.PI /2};
+
+	//matStack.pushNew();
+	var mat = matStack.top();
 
 	new TWEEN.Tween(oldAngle)
-		.to(newAngle, 2000)
+		.to(newAngle, 1000)
 		.easing(TWEEN.Easing.Elastic.Out)
 		.onUpdate(function() {
-			//var mat = new THREE.Matrix4(); // works ("A")
-			block.object.updateMatrix();
-			var mat = block.object.matrix; // XXX: Weird error. 
 
-			mat.rotateX(oldAngle.x);
-			mat.rotateY(oldAngle.y);
-			mat.rotateZ(oldAngle.z);
+			var mat2 = new THREE.Matrix4(); // works ("A")
+
+			for(var i = 0; i < blocks.length; i++) {
+				blocks[i].object.updateMatrix();
+			}
+
+			mat2.rotateX(oldAngle.x);
+			//mat2.rotateY(oldAngle.y);
+			//mat2.rotateZ(oldAngle.z);
+
+			//matStack.top().rotateX(oldAngle.x);
+
+			matStack.push(mat2);
+
+			for(var i = 0; i < blocks.length; i++) {
+				blocks[i].object.updateMatrix();
+			}
 
 			//block.object.matrix.multiplySelf(mat); // works with (A)
 		})
@@ -148,6 +162,9 @@ function render()
 
 	// First block 
 	block = blocks[0];
+	matStack.pushNew();
+	var mat = matStack.top();
+	block.object.matrix.multiplySelf(mat);
 
 	// Second block
 	block = blocks[1];
@@ -176,12 +193,7 @@ function render()
 
 
 
-
-
-
-
-
-	camera.position.x += (mouseX - camera.position.x) * 0.01;
+	//camera.position.x += (mouseX - camera.position.x) * 0.01;
 	//camera.position.y += (-mouseY - camera.position.y) * 0.05;
 
 	renderer.render(scene, camera);
