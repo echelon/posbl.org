@@ -24,62 +24,26 @@ function init() {
 	camera.position.z = 1000;
 	scene.add( camera );
 
-	var newBlock = function() {
+	// Create the nine Rubik blocks of a single dimension. 
+	// TODO: Colors, data structure, etc.
+	// TODO: All 27.
+	for(var i = 0; i < 9; i++) {
 		var block = new Block();
 		block.add(scene);
 		block.object.updateMatrix();
 		blocks.push(block);
-		return block;
 	}
 
-	// First block 
-	block = newBlock();
-
-	// Second block
-	block = newBlock();
-	//matStack.pushNew();
-	//var mat = matStack.top().translate({x: 0, y: 210, z: 0});
-	//block.object.matrix.multiplySelf(mat);
-
-	// Third block
-	block = newBlock();
-	//matStack.pushNew();
-	//var mat = matStack.top().translate({x: 0, y: 210, z: 0});
-	//block.object.matrix.multiplySelf(mat);
-
-	//matStack.pop();
-	//matStack.pop();
-
-	// Fourth block
-	block = newBlock();
-	//matStack.pushNew();
-	//var mat = matStack.top().translate({x: 210, y: 0, z: 0});
-	//block.object.matrix.multiplySelf(mat);
-
-	//matStack.pop();
-
-
-/*	block = new Block();
-	block.add(scene);
-	block.object.position.x = 212;
-	block.object.updateMatrix();
-	blocks.push(block);
-
-	block = new Block();
-	block.add(scene);
-	block.object.position.x = 424;
-	block.object.updateMatrix();
-	blocks.push(block);*/
-
+	// XXX: This is only because I use Vrome and it captures all
+	// keyboard input by default. 
 	$('input').focus();
-	$('input').keypress(function(event) {
-		move();
-	});
-
 	$('body').click(function(event) {
 		$('input').focus();
 	});
-
+	$('input').keypress(function(event) {
+		move();
+	});
+	
 	$(window).mousemove(function(event) {
 		lastX = mouseX;
 		lastY = mouseY;
@@ -160,34 +124,77 @@ function render()
 {
 	TWEEN.update();
 
-	// First block 
+	/**
+	 * FIRST DIMENSION
+	 */ 
+
+	// First dimension, middle row, center
 	block = blocks[0];
 	matStack.pushNew();
 	var mat = matStack.top();
 	block.object.matrix.multiplySelf(mat);
 
-	// Second block
+	// First dimension, middle row, right
 	block = blocks[1];
-	matStack.pushNew();
-	var mat = matStack.top().translate({x: 0, y: 210, z: 0});
-	block.object.matrix.multiplySelf(mat);
-
-	// Third block
-	block = blocks[2];
-	matStack.pushNew();
-	var mat = matStack.top().translate({x: 0, y: 210, z: 0});
-	block.object.matrix.multiplySelf(mat);
-
-	matStack.pop();
-	matStack.pop();
-
-	// Fourth block
-	block = blocks[3];
 	matStack.pushNew();
 	var mat = matStack.top().translate({x: 210, y: 0, z: 0});
 	block.object.matrix.multiplySelf(mat);
-
 	matStack.pop();
+
+	// First dimension, middle row, left 
+	block = blocks[2];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: -210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	// First dimension, top row, center 
+	block = blocks[3];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 0, y: 210, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	// NO POP
+
+	// First dimension, top row, right
+	block = blocks[4];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	// First dimension, top row, left 
+	block = blocks[5];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: -210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	matStack.pop(); // Pop row. 
+
+	// First dimension, bottom row, center 
+	block = blocks[6];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 0, y: -210, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	// NO POP
+
+	// First dimension, bottom row, right
+	block = blocks[7];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: 210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	// First dimension, bottom row, left 
+	block = blocks[8];
+	matStack.pushNew();
+	var mat = matStack.top().translate({x: -210, y: 0, z: 0});
+	block.object.matrix.multiplySelf(mat);
+	matStack.pop();
+
+	matStack.pop(); // Pop row. 
+
+
 
 
 
