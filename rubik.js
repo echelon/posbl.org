@@ -1,85 +1,102 @@
-/**
- * Color constants
- */
-var COLORS = {
-	red:	0xcc0000,
-	green:	0x00cc00,
-	blue:	0x0000ff,
-	white:	0xdddddd,
-	orange: 0xffff00,
-	yellow: 0xff00ff,
-	black:	0x555555, // XXX: Remove later.
-}
 
-/**
- * Block class.
- * TODO: Better parameterization -- use object w/ named params. 
- */
-var Block = function(color, size)
+// TODO: Deprecate and remove. 
+var OLDcoords = [
+	// Layer one
+	[0, 0, 0],
+	[0, 0, 1],
+	[0, 0, -1],
+	[0, 1, 0],
+	[0, 1, 1],
+	[0, 1, -1],
+	[0, -1, 0],
+	[0, -1, 1],
+	[0, -1, -1],
+	// Layer two 
+	[1, 0, 0],
+	[1, 0, 1],
+	[1, 0, -1],
+	[1, 1, 0],
+	[1, 1, 1],
+	[1, 1, -1],
+	[1, -1, 0],
+	[1, -1, 1],
+	[1, -1, -1],
+	// Layer three 
+	[-1, 0, 0],
+	[-1, 0, 1],
+	[-1, 0, -1],
+	[-1, 1, 0],
+	[-1, 1, 1],
+	[-1, 1, -1],
+	[-1, -1, 0],
+	[-1, -1, 1],
+	[-1, -1, -1],
+];
+
+var Rubik = function()
 {
 	/**
-	 * CTOR
+	 * All of the 27 blocks in the Rubik cube. 
 	 */
-
-	var randColor = function() {
-		var colors = [
-			0x990000, 0xcc0000, 0xff0000, // reds
-			0x009900, 0x00cc00, 0x00ff00, // greens
-			0x000099, 0x0000cc, 0x0000ff, // blues
-			0x999900, 0xcccc00, 0xffff00, // yellows
-			0x990099, 0xcc00cc, 0xff00ff, // fushias 
-			0x009999, 0x00cccc, 0x00ffff, // cyans
-			0x999999, 0xcccccc // greys
-		]
-		return colors[Math.floor(rand(0, colors.length))];
-	}
-
-	var sz = size || 200;
-	var c = color || randColor();
+	this.blocks = [];
 
 	/**
-	 * Object Members
+	 * Pointers to all 27 blocks in the 3D Rubik cube.
+	 * This maintains spatial organization. 
 	 */
+	this.rubik = [[[null, null, null],
+					[null, null, null],
+					[null, null, null]],
+				 [[null, null, null],
+					[null, 0, null], // '0' is center
+					[null, null, null]],
+				 [[null, null, null],
+					[null, null, null],
+					[null, null, null]]
+	];
 
-	this.mat = new THREE.MeshBasicMaterial({
-		color: c,
-		//overdraw: true,
-		//transparent: true,
-		//blending: THREE.AdditiveBlending,
-		//blending: THREE.NormalBlending,
-		//blending: THREE.SubtractiveBlending,
-		//blending: THREE.AdditiveAlphaBlending,
-		//opacity: 0.9,
-		//wireframe: true
-	});
+	// Create the blocks. 
+	for(var i = 0; i < 27; i++) {
+		// XXX/TEMP: Set color of layers so it's easier to debug
+		var color = 0;
+		if(i < 9) {
+			color = COLORS.black;
+		}
+		else if(i < 18) {
+			color = COLORS.white;
+		}
+		else {
+			color = COLORS.red;
+		}
 
-	this.object = new THREE.Mesh(
-		new THREE.CubeGeometry(sz, sz, sz),
-		this.mat
-	);
+		var block = new Block(color);
+		block.add(scene);
+		block.object.updateMatrix();
 
-	this.object.castShadow = true;
-	this.object.receiveShadow = true;
-	this.object.matrixAutoUpdate = false;
-
-	// If the block is being animated
-	this.isMoving = false; 
-
-	// The position of the block in the fully assembled cube.
-	// Each dimension is either [-1, 0, 1]
-	// The coordinate {x=0, y=0, z=0} is the center block. 
-	this.position = {
-		x: 0,
-		y: 0,
-		z: 0
-	};
-
-	/**
-	 * Methods 
-	 */
-
-	this.add = function(scene) {
-		scene.add(this.object);
+		block.position.x = OLDcoords[i][0];
+		block.position.y = OLDcoords[i][1];
+		block.position.z = OLDcoords[i][2];
+		
+		this.blocks.push(block);
 	}
+
+	// INITIAL POSITIONING
+	// TODO: Deprecate and remove
+	for(var i = 0; i < this.blocks.length; i++) {
+
+		block = this.blocks[i];
+		var coords = {
+			x: 210 * block.position.x,
+			y: 210 * block.position.y,
+			z: 210 * block.position.z
+		}
+
+		var mat = new THREE.Matrix4();
+		mat.translate(coords);
+		block.pushMat(mat);
+		//block.object.matrix.multiplySelf(mat);
+	}
+
+
+
 }
-
