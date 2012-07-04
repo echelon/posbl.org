@@ -116,11 +116,12 @@ function init()
 		renderer = new THREE.CanvasRenderer();
 		renderer.setSize( window.innerWidth, 
 			window.innerHeight );
-	
-		/*var light = new THREE.DirectionalLight(0xffffff);
+
+		// FIXME: Does lighting not work on canvas? 
+		var light = new THREE.DirectionalLight(0xffffff);
 		light.position.set(1, 0, 0).normalize();
 		light.castShadow = true; // TODO
-		scene.add(light);*/
+		scene.add(light);
 
 		document.body.appendChild(renderer.domElement);
 
@@ -133,6 +134,7 @@ function init()
 		scene.add(camHelp);
 
 		animate();	
+		move();
 	});
 }
 
@@ -184,6 +186,11 @@ function move()
 		.onComplete(function() {
 			// Lock to prevent two tweens at once. 
 			lock = false;
+
+			// Mark all blocks as non-animated.
+			for(var i = 0; i < blocks.length; i++) {
+				blocks[i].isRotating = false;
+			}
 
 			setTimeout(function() {
 				move();
@@ -254,8 +261,8 @@ function render()
 	matStack.pop();
 */
 
-	//camera.position.x += (mouseX - camera.position.x) * 0.01;
-	//camera.position.y += (-mouseY - camera.position.y) * 0.05;
+	camera.position.x += (mouseX - camera.position.x) * 0.01;
+	camera.position.y += (-mouseY - camera.position.y) * 0.05;
 
 	renderer.render(scene, camera);
 }
