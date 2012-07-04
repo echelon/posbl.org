@@ -18,11 +18,21 @@ function init()
 {
 	scene = new THREE.Scene();
 
-	camera = new THREE.PerspectiveCamera( 75, 
-			window.innerWidth / window.innerHeight, 1, 10000 );
+	var cDom = $('#canvas');
+	var aspect = cDom.innerWidth() / cDom.innerHeight();
+
+	camera = new THREE.PerspectiveCamera(
+		75,		// fov
+		aspect, // aspect
+		1,		// near clipping
+		10000	// far clipping
+	);
+
+
 	camera.position.z = 1000;
 	camera.position.x = 0;
 	camera.position.y = 0;
+
 	scene.add( camera );
 
 	rubik = new Rubik();
@@ -96,7 +106,8 @@ function init()
 		light.castShadow = true; // TODO
 		scene.add(light);
 
-		document.body.appendChild(renderer.domElement);
+		$("#canvas").html(renderer.domElement);
+
 
 		var help = new THREE.AxisHelper();
 		help.position.x = -500;
@@ -105,6 +116,39 @@ function init()
 
 		var camHelp = new THREE.CameraHelper(camera);
 		scene.add(camHelp);
+
+		// Random rubik movement.
+		setInterval(function() {
+			switch(Math.round(rand(0, 10))) {
+				case 0:
+					rotate_x1();
+					break;
+				case 1:
+					rotate_x2();
+					break;
+				case 2:
+					rotate_x3();
+					break;
+				case 3:
+					rotate_y1();
+					break;
+				case 4:
+					rotate_y2();
+					break;
+				case 5:
+					rotate_y3();
+					break;
+				case 6:
+					rotate_z1();
+					break;
+				case 7:
+					rotate_z2();
+					break;
+				case 8:
+					rotate_z3();
+					break;
+			}
+		}, 1000);
 
 		animate();	
 	});
@@ -129,8 +173,10 @@ function render()
 		block.applyMats();
 	}
 
-	camera.position.x += (mouseX - camera.position.x) * 0.3;
-	camera.position.y += (-mouseY - camera.position.y) * 0.3;
+	//camera.position.x += (mouseX - camera.position.x) * 0.3;
+	//camera.position.y += (-mouseY - camera.position.y) * 0.3;
+
+	camera.rotation.y += 0.01;
 
 	renderer.render(scene, camera);
 }
