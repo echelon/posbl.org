@@ -36,23 +36,6 @@ function move()
 		.easing(TWEEN.Easing.Elastic.Out)
 		.onUpdate(function() {
 
-			/*
-			var mat2 = new THREE.Matrix4();
-
-			for(var i = 0; i < blocks.length; i++) {
-				blocks[i].object.updateMatrix();
-			}
-
-			//mat2.rotateX(oldAngle.x);
-			mat2.rotateY(oldAngle.y);
-			//mat2.rotateZ(oldAngle.z);
-
-			matStack.push(mat2);
-
-			for(var i = 0; i < blocks.length; i++) {
-				blocks[i].object.updateMatrix();
-			}*/
-
 			for(var i = 0; i < blocks.length; i++) {
 				var block = blocks[i];
 				if(!block.isRotating) {
@@ -73,7 +56,6 @@ function move()
 				}
 
 				block.setTopMat(mat);
-				//block.topMat().rotateY(oldAngle.y);
 			}
 
 		})
@@ -81,41 +63,21 @@ function move()
 			// Lock to prevent two tweens at once. 
 			lock = false;
 
-			// Mark all blocks as non-animated.
-			for(var i = 0; i < blocks.length; i++) {
-				blocks[i].isRotating = false;
-			}
-	
-
-			// TODO -- cant' address like this anymore. 
-			// Must dynamically update a map of the sides. 
-			// TODO TODO TODO TODO -- time to give them names. 
-			//blocks[9].isRotating = true;
-			//blocks[10].isRotating = true;
-			//blocks[11].isRotating = true;
-			blocks[12].isRotating = true;
-			blocks[13].isRotating = true;
-			blocks[14].isRotating = true;
-			blocks[15].isRotating = true;
-			blocks[16].isRotating = true;
-			blocks[17].isRotating = true;
-			ROTATE_TYPE = 'x';
-
-			/*switch(ROTATE_TYPE) {
-				case 'x':
-					ROTATE_TYPE = 'y';
-					break;
-				case 'y':
-					ROTATE_TYPE = 'z';
-					break;
-				case 'z':
-					ROTATE_TYPE = 'x';
-					break;
-			}*/
-
-			/*setTimeout(function() {
-				move();
-			}, 1000);*/
+			// TODO: Do this immediately from now on. 
+			setTimeout(function() {
+				for(var i = 0; i < blocks.length; i++) {
+					var block = blocks[i];
+					if(!block.isRotating) {
+						continue;
+					}
+					// XXX: Method 1
+					// XXX: Pop the mat we pushed. 
+					//block.popMat(); // XXX: Temp comment out
+				}
+				// XXX: Method 2
+				// Reposition everything. 
+				rubik.position();
+			}, 600);
 		})
 		.start();
 }

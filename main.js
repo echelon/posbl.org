@@ -113,6 +113,8 @@ function render()
 		block.object.updateMatrix();
 		block.applyMats();
 
+
+
 		// Rotating blocks require matrix stack operations. 
 		/*if (block.isRotating) {
 			matStack.pushNew();

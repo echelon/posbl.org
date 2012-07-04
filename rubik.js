@@ -82,28 +82,46 @@ var Rubik = function()
 		this.blocks.push(block);
 	}
 
-	// Position blocks in the 'rubik' 3D vector. 
-	// TODO: This should determine positioning. 
-	var i = 0;
-	for(var x = 0; x < 3; x++) {
-		for(var y = 0; y < 3; y++) {
-			for(var z = 0; z < 3; z++) {
-				// Place in data structure
-				this.rubik[x][y][z] = this.blocks[i];
+	/**
+	 * Position blocks in the 'rubik' 3D vector. 
+	 */	
+	this.position = function()
+	{
+		var i = 0;
+		for(var x = 0; x < 3; x++) {
+			for(var y = 0; y < 3; y++) {
+				for(var z = 0; z < 3; z++) {
+					// Place in data structure
+					this.rubik[x][y][z] = this.blocks[i];
 
-				// Give initial OpenGL position
-				block = this.blocks[i];
-				var coords = {
-					x: 210 * (x-1),
-					y: 210 * (y-1),
-					z: 210 * (z-1)
+					// Give initial OpenGL position
+					block = this.blocks[i];
+					var coords = {
+						x: 210 * (x-1),
+						y: 210 * (y-1),
+						z: 210 * (z-1)
+					}
+					
+					// Reset root stack matrix to identity, then
+					// translate. 
+					block.matrixStack[0]
+						.identity()
+						.translate(coords);
+
+					// XXX: Probably a good thing to do.
+					// Will remove any 'tweening' stacks.
+					// XXX: OR actually, bad... rotation of cube faces
+					while(block.matrixStack.length >= 2) {
+						block.matrixStack.pop();
+					}
+					
+					i++;
 				}
-
-				block.pushMat((new THREE.Matrix4()).translate(coords));
-				i++;
 			}
 		}
 	}
+
+	this.position();
 
 	// INITIAL POSITIONING
 	// TODO: Deprecate and remove

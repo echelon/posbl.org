@@ -43,13 +43,13 @@ var Block = function(color, size)
 
 	this.mat = new THREE.MeshBasicMaterial({
 		color: c,
-		//overdraw: true,
-		//transparent: true,
+		overdraw: true,
+		transparent: true,
 		//blending: THREE.AdditiveBlending,
 		//blending: THREE.NormalBlending,
-		//blending: THREE.SubtractiveBlending,
+		blending: THREE.SubtractiveBlending,
 		//blending: THREE.AdditiveAlphaBlending,
-		//opacity: 0.9,
+		opacity: 0.9,
 		//wireframe: true
 	});
 
@@ -73,6 +73,13 @@ var Block = function(color, size)
 		y: 0,
 		z: 0
 	};
+
+	// Reset the Object Matrix.
+	// TODO: Better way? 
+	// TODO: Needed? 
+	this.resetObjectMatrix = function() {
+		this.object.matrix = new THREE.Matrix4();
+	}
 
 	// A temporary matrix stack. XXX/TESTING
 	this.matrixStack = [this.object.matrix.clone()];
