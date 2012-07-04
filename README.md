@@ -1,19 +1,19 @@
 Brandon's Homepage
 ==================
 
-This is the content of Brandon's homepage, possibilistic.org.
+This is the content of my homepage, possibilistic.org.
 
 Directory Structure
 -------------------
 
-/				-	contains a few static html files
-					  this is the primary content of the site
-/img			-	contains image files
-/presentation	-	contains subdirectories of presentations
+* /				-	contains a few static html files
+* /js			-	javascripts for the homepage (TODO)
+* /js/lib		-	3rd party javascript libraries (TODO)
+* /img			-	contains image files
+* /presentation	-	contains subdirectories of presentations
+* /retro		-	preserves some of the old designs for my website
 
 Todo
 ----
 
-I would like to preserve some of the old designs I had for my website. 
-I'm not sure how to best accomplish this. 
-
+Work on version 2.0.
