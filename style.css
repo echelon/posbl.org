@@ -1,0 +1,29 @@
+
+body {
+	background-color: #111;
+	overflow: hidden;
+}
+
+img {
+	border: 1px solid #f00;
+}
+
+input {
+	background-color: #111;
+	border: none;
+	outline-width: 0;
+	color: #111;
+}
+
+#canvas {
+	margin: auto;
+	padding: 0px;
+	width: 800px;
+	height: 600px;
+	border: 2px solid #ccc;
+}
+
+canvas {
+	width: 800px;
+	height: 600px;
+}
