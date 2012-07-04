@@ -1,10 +1,17 @@
 
+// XXX DEPRECATED
+function move() 
+{
+	rotate_x1();
+}
+
 
 var rotate_x1 = function()
 {
 	if(lock) { return; }
 	lock = true;
 	
+	var oldAngle = {x: 0, y:0, z:0};
 	var newAngle = {
 		x: oldAngle.x + Math.PI/2, 
 		y: oldAngle.y + Math.PI/2, 
@@ -24,9 +31,24 @@ var rotate_x1 = function()
 	rubik.rubik[0][2][1].isRotating = true;
 	rubik.rubik[0][2][2].isRotating = true;
 
-	installMatrices();
+	// Swap cube assignments on callback. (TODO -- not correct)
+	var swapCubes = function() {
+		var t;
+		t = rubik.rubik[0][2][0];
+		rubik.rubik[0][2][0] = rubik.rubik[0][0][0];
+		rubik.rubik[0][0][0] = rubik.rubik[0][0][2];
+		rubik.rubik[0][0][2] = rubik.rubik[0][2][2];
+		rubik.rubik[0][2][2] = t;
 
-	installTween(newAngle, 'x', function(){});
+		t = rubik.rubik[0][2][1];
+		rubik.rubik[0][2][1] = rubik.rubik[0][1][0];
+		rubik.rubik[0][1][0] = rubik.rubik[0][0][1];
+		rubik.rubik[0][0][1] = rubik.rubik[0][1][2];
+		rubik.rubik[0][1][2] = t;
+	}
+
+	installMatrices();
+	installTween(newAngle, oldAngle, 'x', swapCubes);
 }
 
 var rotate_x2 = function()
@@ -101,7 +123,7 @@ var rotate_y1 = function()
 
 	rotateReset();
 
-	// Mark x1 rotational group as rotating. 
+	// Mark y1 rotational group as rotating. 
 	rubik.rubik[0][0][0].isRotating = true;
 	rubik.rubik[0][0][1].isRotating = true;
 	rubik.rubik[0][0][2].isRotating = true;
@@ -112,9 +134,8 @@ var rotate_y1 = function()
 	rubik.rubik[2][0][1].isRotating = true;
 	rubik.rubik[2][0][2].isRotating = true;
 
-	installMatrices();
-
-	installTween(newAngle, oldAngle, 'y', function() { 
+	// Swap cube assignments on callback.
+	var swapCubes = function() {
 		var t;
 		t = rubik.rubik[0][0][0];
 		rubik.rubik[0][0][0] = rubik.rubik[2][0][0];
@@ -127,7 +148,10 @@ var rotate_y1 = function()
 		rubik.rubik[1][0][0] = rubik.rubik[2][0][1];
 		rubik.rubik[2][0][1] = rubik.rubik[1][0][2];
 		rubik.rubik[1][0][2] = t;
-	});
+	}
+
+	installMatrices();
+	installTween(newAngle, oldAngle, 'y', swapCubes);
 }
 
 

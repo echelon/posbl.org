@@ -92,9 +92,3 @@ var installTween = function(newAngle, oldAngle, axis, callback)
 		.start();
 }
 
-// XXX DEPRECATED
-function move() 
-{
-	rotate_y1();
-}
-
