@@ -109,13 +109,13 @@ function init()
 		$("#canvas").html(renderer.domElement);
 
 
-		var help = new THREE.AxisHelper();
+		/*var help = new THREE.AxisHelper();
 		help.position.x = -500;
 		help.position.y = -500;
 		scene.add(help);
 
 		var camHelp = new THREE.CameraHelper(camera);
-		scene.add(camHelp);
+		scene.add(camHelp);*/
 
 		// Random rubik movement.
 		setInterval(function() {
@@ -160,23 +160,40 @@ function animate()
 	render();
 }
 
+var y = 0;
+var z = 0;
 function render()
 {
 	TWEEN.update();
+
+	var X = Math.sin(y) * 100;
+
+	var rotMat = new THREE.Matrix4();
+	var tVec = new THREE.Vector3(0, X, 0);
+	rotMat.translate(tVec);
+	rotMat.rotateY(y);
+	rotMat.rotateZ(y);
+
+	y+= 0.005;
 
 	/**
 	 * Position Blocks
 	 */ 
 	for(var i = 0; i < blocks.length; i++) {
 		block = blocks[i];
+
+		block.pushMat(rotMat)
+
 		block.object.updateMatrix();
 		block.applyMats();
+
+		block.popMat();
 	}
 
 	//camera.position.x += (mouseX - camera.position.x) * 0.3;
 	//camera.position.y += (-mouseY - camera.position.y) * 0.3;
 
-	camera.rotation.y += 0.01;
+	//camera.rotation.y += 0.01;
 
 	renderer.render(scene, camera);
 }
