@@ -1,4 +1,5 @@
 
+
 var rotate_x1 = function()
 {
 	if(lock) { return; }
@@ -25,7 +26,7 @@ var rotate_x1 = function()
 
 	installMatrices();
 
-	installTween(newAngle, 'x');
+	installTween(newAngle, 'x', function(){});
 }
 
 var rotate_x2 = function()
@@ -54,7 +55,7 @@ var rotate_x2 = function()
 
 	installMatrices();
 
-	installTween(newAngle, 'x');
+	installTween(newAngle, 'x', function(){});
 }
 
 var rotate_x3 = function()
@@ -83,7 +84,7 @@ var rotate_x3 = function()
 
 	installMatrices();
 
-	installTween(newAngle, 'x');
+	installTween(newAngle, 'x', function(){});
 }
 
 var rotate_y1 = function()
@@ -91,6 +92,7 @@ var rotate_y1 = function()
 	if(lock) { return; }
 	lock = true;
 	
+	var oldAngle = {x: 0, y:0, z:0};
 	var newAngle = {
 		x: oldAngle.x + Math.PI/2, 
 		y: oldAngle.y + Math.PI/2, 
@@ -112,7 +114,20 @@ var rotate_y1 = function()
 
 	installMatrices();
 
-	installTween(newAngle, 'y');
+	installTween(newAngle, oldAngle, 'y', function() { 
+		var t;
+		t = rubik.rubik[0][0][0];
+		rubik.rubik[0][0][0] = rubik.rubik[2][0][0];
+		rubik.rubik[2][0][0] = rubik.rubik[2][0][2];
+		rubik.rubik[2][0][2] = rubik.rubik[0][0][2];
+		rubik.rubik[0][0][2] = t;
+
+		t = rubik.rubik[0][0][1];
+		rubik.rubik[0][0][1] = rubik.rubik[1][0][0];
+		rubik.rubik[1][0][0] = rubik.rubik[2][0][1];
+		rubik.rubik[2][0][1] = rubik.rubik[1][0][2];
+		rubik.rubik[1][0][2] = t;
+	});
 }
 
 

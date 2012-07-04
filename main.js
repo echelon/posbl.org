@@ -25,6 +25,8 @@ function init()
 	camera = new THREE.PerspectiveCamera( 75, 
 			window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.z = 1000;
+	camera.position.x = 0;
+	camera.position.y = 0;
 	scene.add( camera );
 
 	rubik = new Rubik();
@@ -48,7 +50,7 @@ function init()
 		$('input').focus();
 	});
 	$('input').keypress(function(event) {
-		rotate_x1();
+		move();
 	});
 	
 	$(window).mousemove(function(event) {
@@ -103,8 +105,8 @@ function render()
 		block.applyMats();
 	}
 
-	//camera.position.x += (mouseX - camera.position.x) * 0.01;
-	//camera.position.y += (-mouseY - camera.position.y) * 0.05;
+	camera.position.x += (mouseX - camera.position.x) * 0.09;
+	camera.position.y += (-mouseY - camera.position.y) * 0.09;
 
 	renderer.render(scene, camera);
 }

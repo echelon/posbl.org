@@ -55,13 +55,11 @@ var Rubik = function()
 					[null, null, null]]
 	];
 
-	
-
 	// Create the blocks. 
 	for(var i = 0; i < 27; i++) {
 		// XXX/TEMP: Set color of layers so it's easier to debug
 		var color = 0;
-		if(i < 9) {
+		/*if(i < 9) {
 			color = COLORS.black;
 		}
 		else if(i < 18) {
@@ -69,7 +67,7 @@ var Rubik = function()
 		}
 		else {
 			color = COLORS.red;
-		}
+		}*/
 
 		var block = new Block(color);
 		block.add(scene);
@@ -82,6 +80,22 @@ var Rubik = function()
 		this.blocks.push(block);
 	}
 
+	this.init = function() 
+	{
+		var i = 0;
+		for(var x = 0; x < 3; x++) {
+			for(var y = 0; y < 3; y++) {
+				for(var z = 0; z < 3; z++) {
+					// Place in data structure
+					this.rubik[x][y][z] = this.blocks[i];
+					i++;
+				}
+			}
+		}
+	}
+
+	this.init();
+
 	/**
 	 * Position blocks in the 'rubik' 3D vector. 
 	 */	
@@ -91,11 +105,8 @@ var Rubik = function()
 		for(var x = 0; x < 3; x++) {
 			for(var y = 0; y < 3; y++) {
 				for(var z = 0; z < 3; z++) {
-					// Place in data structure
-					this.rubik[x][y][z] = this.blocks[i];
-
 					// Give initial OpenGL position
-					block = this.blocks[i];
+					block = this.rubik[x][y][z];
 					var coords = {
 						x: 210 * (x-1),
 						y: 210 * (y-1),
@@ -116,8 +127,6 @@ var Rubik = function()
 					while(block.matrixStack.length >= 2) {
 						block.matrixStack.pop();
 					}
-					
-					i++;
 				}
 			}
 		}

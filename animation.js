@@ -1,10 +1,21 @@
 
 // Prevent simultaneous rotations 
 var ROTATE_LOCK = false;
+var lock = false; // TODO: Replace with other variable 
 
 var oldAngle = {x: 0, y:0, z:0};
 
 /* ========================================================== */
+
+// Swap rubik spots
+var swapPlaces = function(r1, r2)
+{
+	var b1 = rubik.rubik[r1.x][r1.y][r1.z];
+	var b2 = rubik.rubik[r2.x][r2.y][r2.z];
+
+	rubik.rubik[r1.x][r1.y][r1.z] = b1;
+	rubik.rubik[r2.x][r2.y][r2.z] = b2;
+}
 
 // Mark all as non-rotating. 
 var rotateReset = function() 
@@ -28,11 +39,11 @@ var installMatrices = function()
 	}
 }
 
-var installTween = function(newAngle, axis)
+var installTween = function(newAngle, oldAngle, axis, callback)
 {
 	new TWEEN.Tween(oldAngle)
-		.to(newAngle, 600)
-		.easing(TWEEN.Easing.Elastic.Out)
+		.to(newAngle, 1600)
+		//.easing(TWEEN.Easing.Elastic.Out)
 		.onUpdate(function() {
 			for(var i = 0; i < blocks.length; i++) {
 				var block = blocks[i];
@@ -73,18 +84,17 @@ var installTween = function(newAngle, axis)
 				}
 				// XXX: Method 2
 				// Reposition everything. 
-				//rubik.position(); // XXX COMMENTED OUT COMMENTED OUT TEMP
+				rubik.position(); // XXX COMMENTED OUT COMMENTED OUT TEMP
 			}, 600);
+
+			callback();
 		})
 		.start();
 }
 
-// XXX/NOTE : Will get out of alignment if called again before 
-// animation finishes
-var lock = false;
+// XXX DEPRECATED
 function move() 
 {
-	rotate_x1();
+	rotate_y1();
 }
-
 
