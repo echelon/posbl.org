@@ -55,6 +55,8 @@ var Rubik = function()
 					[null, null, null]]
 	];
 
+	
+
 	// Create the blocks. 
 	for(var i = 0; i < 27; i++) {
 		// XXX/TEMP: Set color of layers so it's easier to debug
@@ -80,9 +82,32 @@ var Rubik = function()
 		this.blocks.push(block);
 	}
 
+	// Position blocks in the 'rubik' 3D vector. 
+	// TODO: This should determine positioning. 
+	var i = 0;
+	for(var x = 0; x < 3; x++) {
+		for(var y = 0; y < 3; y++) {
+			for(var z = 0; z < 3; z++) {
+				// Place in data structure
+				this.rubik[x][y][z] = this.blocks[i];
+
+				// Give initial OpenGL position
+				block = this.blocks[i];
+				var coords = {
+					x: 210 * (x-1),
+					y: 210 * (y-1),
+					z: 210 * (z-1)
+				}
+
+				block.pushMat((new THREE.Matrix4()).translate(coords));
+				i++;
+			}
+		}
+	}
+
 	// INITIAL POSITIONING
 	// TODO: Deprecate and remove
-	for(var i = 0; i < this.blocks.length; i++) {
+	/*for(var i = 0; i < this.blocks.length; i++) {
 
 		block = this.blocks[i];
 		var coords = {
@@ -95,8 +120,6 @@ var Rubik = function()
 		mat.translate(coords);
 		block.pushMat(mat);
 		//block.object.matrix.multiplySelf(mat);
-	}
-
-
+	}*/
 
 }
