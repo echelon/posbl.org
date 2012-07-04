@@ -62,18 +62,15 @@ function init()
 	for(var i = 0; i < 27; i++) {
 
 		// XXX/TEMP: Set color of layers so it's easier to debug
-		var color = 0x000000;
-		if(i == 0) {
+		var color = 0;
+		if(i < 9) {
 			color = COLORS.black;
-		}
-		else if(i < 9) {
-			color = COLORS.red;
 		}
 		else if(i < 18) {
 			color = COLORS.white;
 		}
 		else {
-			color = COLORS.blue;
+			color = COLORS.red;
 		}
 
 		var block = new Block(color);
@@ -142,14 +139,14 @@ function init()
 // XXX/NOTE : Will get out of alignment if called again before 
 // animation finishes
 var oldAngle = {x: 0, y:0, z:0};
-var done = true;
+var lock = false;
 function move() 
 {
-	if(!done) {
+	if(lock) {
 		return;
 	}
 
-	done = false;
+	lock = true;
 
 	var block = blocks[0];
 
@@ -185,7 +182,12 @@ function move()
 			}
 		})
 		.onComplete(function() {
-			done = true;
+			// Lock to prevent two tweens at once. 
+			lock = false;
+
+			setTimeout(function() {
+				move();
+			}, 1000);
 		})
 		.start();
 }

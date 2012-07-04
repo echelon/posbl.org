@@ -8,7 +8,7 @@ var COLORS = {
 	white:	0xdddddd,
 	orange: 0xffff00,
 	yellow: 0xff00ff,
-	black:	0x000000, // XXX: Remove later.
+	black:	0x555555, // XXX: Remove later.
 }
 
 /**
