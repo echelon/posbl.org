@@ -39,7 +39,7 @@ var installMatrices = function()
 var installTween = function(newAngle, oldAngle, axis, callback)
 {
 	new TWEEN.Tween(oldAngle)
-		.to(newAngle, 600)
+		.to(newAngle, 900)
 		.easing(TWEEN.Easing.Elastic.Out)
 		.onUpdate(function() {
 			for(var i = 0; i < blocks.length; i++) {

@@ -129,8 +129,8 @@ function render()
 		block.applyMats();
 	}
 
-	camera.position.x += (mouseX - camera.position.x) * 0.9;
-	camera.position.y += (-mouseY - camera.position.y+1000) * 0.9;
+	camera.position.x += (mouseX - camera.position.x) * 0.3;
+	camera.position.y += (-mouseY - camera.position.y) * 0.3;
 
 	renderer.render(scene, camera);
 }
