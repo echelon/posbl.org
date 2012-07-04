@@ -13,6 +13,7 @@ var COLORS = {
 
 /**
  * Block class.
+ * TODO: Better parameterization -- use object w/ named params. 
  */
 var Block = function(color, size)
 {
@@ -63,6 +64,15 @@ var Block = function(color, size)
 
 	// If the block is being animated
 	this.isMoving = false; 
+
+	// The position of the block in the fully assembled cube.
+	// Each dimension is either [-1, 0, 1]
+	// The coordinate {x=0, y=0, z=0} is the center block. 
+	this.position = {
+		x: 0,
+		y: 0,
+		z: 0
+	};
 
 	/**
 	 * Methods 
