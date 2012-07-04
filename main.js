@@ -86,6 +86,17 @@ function init()
 		block.position.z = coords[i][2];
 	}
 
+	blocks[0].isRotating = 1;
+	blocks[1].isRotating = 1;
+	blocks[2].isRotating = 1;
+	blocks[9].isRotating = 1;
+	blocks[10].isRotating = 1;
+	blocks[11].isRotating = 1;
+	blocks[18].isRotating = 1;
+	blocks[19].isRotating = 1;
+	blocks[20].isRotating = 1;
+
+
 	// XXX: This is only because I use Vrome and it captures all
 	// keyboard input by default. 
 	$('input').focus();
@@ -163,9 +174,9 @@ function move()
 				blocks[i].object.updateMatrix();
 			}
 
-			mat2.rotateX(oldAngle.x);
+			//mat2.rotateX(oldAngle.x);
 			mat2.rotateY(oldAngle.y);
-			mat2.rotateZ(oldAngle.z);
+			//mat2.rotateZ(oldAngle.z);
 
 			matStack.push(mat2);
 
@@ -194,16 +205,36 @@ function render()
 	 */ 
 
 	for(var i = 0; i < blocks.length; i++) {
+
 		block = blocks[i];
-		matStack.pushNew();
 		var coords = {
 			x: 210 * block.position.x,
 			y: 210 * block.position.y,
 			z: 210 * block.position.z
 		}
-		var mat = matStack.top().translate(coords);
-		block.object.matrix.multiplySelf(mat);
-		matStack.pop();
+
+		// Rotating blocks require matrix stack operations. 
+		if (block.isRotating) {
+			matStack.pushNew();
+			var mat = matStack.top().translate(coords);
+			block.object.matrix.multiplySelf(mat);
+			matStack.pop();
+			//matStack.pushNew();
+		}
+		else {
+			var mat = new THREE.Matrix4();
+			mat.translate(coords);
+			block.object.matrix.multiplySelf(mat);
+		}
+
+		//var mat = new THREE.Matrix4();
+		//mat.translate(coords);
+		//block.object.matrix.multiplySelf(mat);
+		//matStack.pop();
+
+		/*if(i < 9) {
+			matStack.push(tweenMat);
+		}*/
 	}
 
 /*

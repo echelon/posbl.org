@@ -22,7 +22,12 @@ var MatrixStack = function()
 	}
 
 	this.pop = function(mat) {
-		this.stack.pop(mat);
+		// FIXME: BAD POLICY
+		if(this.stack.length <= 1) {
+			console.log("Cannot pop root matrix");
+			return this.stack[0];
+		}
+		return this.stack.pop(mat);
 	}
 
 	this.top = function() {
