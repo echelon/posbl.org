@@ -1,15 +1,11 @@
 
-// XXX DEPRECATED
-function move() 
-{
-	rotate_x3();
-}
-
+// Prevent simultaneous rotations 
+var ROTATE_LOCK = false;
 
 var rotate_x1 = function()
 {
-	if(lock) { return; }
-	lock = true;
+	if(ROTATE_LOCK) { return; }
+	ROTATE_LOCK = true;
 	
 	var oldAngle = {x: 0, y:0, z:0};
 	var newAngle = {
@@ -53,8 +49,8 @@ var rotate_x1 = function()
 
 var rotate_x2 = function()
 {
-	if(lock) { return; }
-	lock = true;
+	if(ROTATE_LOCK) { return; }
+	ROTATE_LOCK = true;
 	
 	var oldAngle = {x: 0, y:0, z:0};
 	var newAngle = {
@@ -98,8 +94,8 @@ var rotate_x2 = function()
 
 var rotate_x3 = function()
 {
-	if(lock) { return; }
-	lock = true;
+	if(ROTATE_LOCK) { return; }
+	ROTATE_LOCK = true;
 	
 	var oldAngle = {x: 0, y:0, z:0};
 	var newAngle = {
@@ -143,8 +139,8 @@ var rotate_x3 = function()
 
 var rotate_y1 = function()
 {
-	if(lock) { return; }
-	lock = true;
+	if(ROTATE_LOCK) { return; }
+	ROTATE_LOCK = true;
 	
 	var oldAngle = {x: 0, y:0, z:0};
 	var newAngle = {

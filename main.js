@@ -50,7 +50,35 @@ function init()
 		$('input').focus();
 	});
 	$('input').keypress(function(event) {
-		move();
+		switch(event.charCode) {
+			case 49: // Keyboard '1'
+				rotate_x1();
+				break;
+			case 50: // '2'
+				rotate_x2();
+				break;
+			case 51: // '3'
+				rotate_x3();
+				break;
+			case 52: // '4'
+				rotate_y1();
+				break;
+			case 53: // '5'
+				rotate_y2();
+				break;
+			case 54: // '6'
+				rotate_y3();
+				break;
+			case 55: // '7'
+				rotate_z1();
+				break;
+			case 56: // '8'
+				rotate_z2();
+				break;
+			case 57: // '9'
+				rotate_z3();
+				break;
+		}
 	});
 	
 	$(window).mousemove(function(event) {
@@ -105,8 +133,8 @@ function render()
 		block.applyMats();
 	}
 
-	camera.position.x += (mouseX - camera.position.x) * 0.9;
-	camera.position.y += (-mouseY - camera.position.y-200) * 0.9;
+	//camera.position.x += (mouseX - camera.position.x) * 0.9;
+	//camera.position.y += (-mouseY - camera.position.y-200) * 0.9;
 
 	renderer.render(scene, camera);
 }

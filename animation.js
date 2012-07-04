@@ -1,7 +1,4 @@
 
-// Prevent simultaneous rotations 
-var ROTATE_LOCK = false;
-var lock = false; // TODO: Replace with other variable 
 
 var oldAngle = {x: 0, y:0, z:0};
 
@@ -69,7 +66,7 @@ var installTween = function(newAngle, oldAngle, axis, callback)
 		})
 		.onComplete(function() {
 			// Lock to prevent two tweens at once. 
-			lock = false;
+			ROTATE_LOCK = false;
 
 			// TODO: Do this immediately from now on. 
 			setTimeout(function() {
