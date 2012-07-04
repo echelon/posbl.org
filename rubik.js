@@ -108,9 +108,11 @@ var Rubik = function()
 						.identity()
 						.translate(coords);
 
-					// XXX: Probably a good thing to do.
-					// Will remove any 'tweening' stacks.
-					// XXX: OR actually, bad... rotation of cube faces
+					// XXX: Probably a good thing to do for added
+					// certainty. This will remove any 'tweening' 
+					// stacks.
+					// XXX: OR actually, bad... once rotation of cube 
+					// faces becomes important. 
 					while(block.matrixStack.length >= 2) {
 						block.matrixStack.pop();
 					}

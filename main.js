@@ -48,7 +48,7 @@ function init()
 		$('input').focus();
 	});
 	$('input').keypress(function(event) {
-		move();
+		rotate_x1();
 	});
 	
 	$(window).mousemove(function(event) {
@@ -90,7 +90,6 @@ function animate()
 	render();
 }
 
-positionTest = 0;
 function render()
 {
 	TWEEN.update();
@@ -98,43 +97,14 @@ function render()
 	/**
 	 * Position Blocks
 	 */ 
-
 	for(var i = 0; i < blocks.length; i++) {
-
 		block = blocks[i];
-		//block.object.updateMatrix();
-
-		/*var coords = {
-			x: 210 * block.position.x,
-			y: 210 * block.position.y,
-			z: 210 * block.position.z
-		}*/
-
 		block.object.updateMatrix();
 		block.applyMats();
-
-
-
-		// Rotating blocks require matrix stack operations. 
-		/*if (block.isRotating) {
-			matStack.pushNew();
-			var mat = matStack.top().translate(coords);
-			block.object.matrix.multiplySelf(mat);
-			matStack.pop();
-			//matStack.pushNew();
-		}
-		*/
-
-		/*if(positionTest < 50) {
-			var mat = new THREE.Matrix4();
-			mat.translate(coords);
-			block.object.matrix.multiplySelf(mat);
-		}*/
 	}
-	positionTest++;
 
-	camera.position.x += (mouseX - camera.position.x) * 0.01;
-	camera.position.y += (-mouseY - camera.position.y) * 0.05;
+	//camera.position.x += (mouseX - camera.position.x) * 0.01;
+	//camera.position.y += (-mouseY - camera.position.y) * 0.05;
 
 	renderer.render(scene, camera);
 }

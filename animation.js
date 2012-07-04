@@ -1,26 +1,22 @@
-// XXX/NOTE : Will get out of alignment if called again before 
-// animation finishes
+
+// Prevent simultaneous rotations 
+var ROTATE_LOCK = false;
+
 var oldAngle = {x: 0, y:0, z:0};
-var lock = false;
-function move() 
+
+/* ========================================================== */
+
+// Mark all as non-rotating. 
+var rotateReset = function() 
 {
-	if(lock) {
-		return;
+	for(var i = 0; i < blocks.length; i++) {
+		blocks[i].isRotating = false;
 	}
-	lock = true;
+}
 
-	var block = blocks[0];
-
-	//var oldAngle = {x: 0, y:0, z:0};
-	var newAngle = {
-		x: oldAngle.x + Math.PI/2, 
-		y: oldAngle.y + Math.PI/2, 
-		z: oldAngle.z + Math.PI/2
-	};
-
-	//matStack.pushNew();
-	//var mat = matStack.top();
-
+// Install new matrix in rotating blocks' stacks
+var installMatrices = function()
+{
 	// Push a new matrix. 
 	// Must be popped?  OR NO?
 	for(var i = 0; i < blocks.length; i++) {
@@ -30,12 +26,14 @@ function move()
 		}
 		block.pushMat(new THREE.Matrix4());
 	}
+}
 
+var installTween = function(newAngle, axis)
+{
 	new TWEEN.Tween(oldAngle)
 		.to(newAngle, 600)
 		.easing(TWEEN.Easing.Elastic.Out)
 		.onUpdate(function() {
-
 			for(var i = 0; i < blocks.length; i++) {
 				var block = blocks[i];
 				if(!block.isRotating) {
@@ -43,7 +41,7 @@ function move()
 				}
 				var mat = new THREE.Matrix4();
 
-				switch(ROTATE_TYPE) {
+				switch(axis) {
 					case 'x':
 						mat.rotateX(oldAngle.x);
 						break;
@@ -57,7 +55,6 @@ function move()
 
 				block.setTopMat(mat);
 			}
-
 		})
 		.onComplete(function() {
 			// Lock to prevent two tweens at once. 
@@ -76,10 +73,18 @@ function move()
 				}
 				// XXX: Method 2
 				// Reposition everything. 
-				rubik.position();
+				//rubik.position(); // XXX COMMENTED OUT COMMENTED OUT TEMP
 			}, 600);
 		})
 		.start();
+}
+
+// XXX/NOTE : Will get out of alignment if called again before 
+// animation finishes
+var lock = false;
+function move() 
+{
+	rotate_x1();
 }
 
 
