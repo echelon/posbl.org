@@ -1,8 +1,25 @@
 /**
+ * Color constants
+ */
+var COLORS = {
+	red:	0xcc0000,
+	green:	0x00cc00,
+	blue:	0x0000ff,
+	white:	0xdddddd,
+	orange: 0xffff00,
+	yellow: 0xff00ff,
+	black:	0x000000, // XXX: Remove later.
+}
+
+/**
  * Block class.
  */
 var Block = function(color, size)
 {
+	/**
+	 * CTOR
+	 */
+
 	var randColor = function() {
 		var colors = [
 			0x990000, 0xcc0000, 0xff0000, // reds
@@ -19,16 +36,20 @@ var Block = function(color, size)
 	var sz = size || 200;
 	var c = color || randColor();
 
+	/**
+	 * Object Members
+	 */
+
 	this.mat = new THREE.MeshBasicMaterial({
 		color: c,
 		//overdraw: true,
-		//wireframe: true
-		//transparent: false,
+		//transparent: true,
 		//blending: THREE.AdditiveBlending,
 		//blending: THREE.NormalBlending,
 		//blending: THREE.SubtractiveBlending,
 		//blending: THREE.AdditiveAlphaBlending,
-		//opacity: 1.0
+		//opacity: 0.9,
+		//wireframe: true
 	});
 
 	this.object = new THREE.Mesh(
@@ -39,6 +60,13 @@ var Block = function(color, size)
 	this.object.castShadow = true;
 	this.object.receiveShadow = true;
 	this.object.matrixAutoUpdate = false;
+
+	// If the block is being animated
+	this.isMoving = false; 
+
+	/**
+	 * Methods 
+	 */
 
 	this.add = function(scene) {
 		scene.add(this.object);

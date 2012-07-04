@@ -27,7 +27,20 @@ function init() {
 	// Create the nine Rubik blocks of a single dimension. 
 	// TODO: Colors, data structure, etc.
 	for(var i = 0; i < 27; i++) {
-		var block = new Block();
+		var color = 0x000000;
+		if(i == 0) {
+			color = COLORS.black;
+		}
+		else if(i < 9) {
+			color = COLORS.red;
+		}
+		else if(i < 18) {
+			color = COLORS.white;
+		}
+		else {
+			color = COLORS.blue;
+		}
+		var block = new Block(color);
 		block.add(scene);
 		block.object.updateMatrix();
 		blocks.push(block);
@@ -56,10 +69,10 @@ function init() {
 		renderer.setSize( window.innerWidth, 
 			window.innerHeight );
 	
-		var light = new THREE.DirectionalLight(0xffffff);
+		/*var light = new THREE.DirectionalLight(0xffffff);
 		light.position.set(1, 0, 0).normalize();
 		light.castShadow = true; // TODO
-		scene.add(light);
+		scene.add(light);*/
 
 		document.body.appendChild(renderer.domElement);
 
@@ -78,8 +91,15 @@ function init() {
 // XXX/NOTE : Will get out of alignment if called again before 
 // animation finishes
 var oldAngle = {x: 0, y:0, z:0};
+var done = true;
 function move() 
 {
+	if(!done) {
+		return;
+	}
+
+	done = false;
+
 	var block = blocks[0];
 
 	//var oldAngle = {x: 0, y:0, z:0};
@@ -97,7 +117,7 @@ function move()
 		.easing(TWEEN.Easing.Elastic.Out)
 		.onUpdate(function() {
 
-			var mat2 = new THREE.Matrix4(); // works ("A")
+			var mat2 = new THREE.Matrix4();
 
 			for(var i = 0; i < blocks.length; i++) {
 				blocks[i].object.updateMatrix();
@@ -107,15 +127,14 @@ function move()
 			mat2.rotateY(oldAngle.y);
 			mat2.rotateZ(oldAngle.z);
 
-			//matStack.top().rotateX(oldAngle.x);
-
 			matStack.push(mat2);
 
 			for(var i = 0; i < blocks.length; i++) {
 				blocks[i].object.updateMatrix();
 			}
-
-			//block.object.matrix.multiplySelf(mat); // works with (A)
+		})
+		.onComplete(function() {
+			done = true;
 		})
 		.start();
 }
@@ -344,16 +363,6 @@ function render()
 
 	matStack.pop(); // Pop row. 
 	matStack.pop(); // Pop dimension.
-
-
-
-
-
-
-
-
-
-
 
 
 	//camera.position.x += (mouseX - camera.position.x) * 0.01;
