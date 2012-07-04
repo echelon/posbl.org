@@ -133,22 +133,4 @@ var Rubik = function()
 	}
 
 	this.position();
-
-	// INITIAL POSITIONING
-	// TODO: Deprecate and remove
-	/*for(var i = 0; i < this.blocks.length; i++) {
-
-		block = this.blocks[i];
-		var coords = {
-			x: 210 * block.position.x,
-			y: 210 * block.position.y,
-			z: 210 * block.position.z
-		}
-
-		var mat = new THREE.Matrix4();
-		mat.translate(coords);
-		block.pushMat(mat);
-		//block.object.matrix.multiplySelf(mat);
-	}*/
-
 }

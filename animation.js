@@ -39,8 +39,8 @@ var installMatrices = function()
 var installTween = function(newAngle, oldAngle, axis, callback)
 {
 	new TWEEN.Tween(oldAngle)
-		.to(newAngle, 1600)
-		//.easing(TWEEN.Easing.Elastic.Out)
+		.to(newAngle, 600)
+		.easing(TWEEN.Easing.Elastic.Out)
 		.onUpdate(function() {
 			for(var i = 0; i < blocks.length; i++) {
 				var block = blocks[i];
@@ -65,26 +65,25 @@ var installTween = function(newAngle, oldAngle, axis, callback)
 			}
 		})
 		.onComplete(function() {
-			// Lock to prevent two tweens at once. 
-			ROTATE_LOCK = false;
-
-			// TODO: Do this immediately from now on. 
-			setTimeout(function() {
-				for(var i = 0; i < blocks.length; i++) {
-					var block = blocks[i];
-					if(!block.isRotating) {
-						continue;
-					}
-					// XXX: Method 1
-					// XXX: Pop the mat we pushed. 
-					//block.popMat(); // XXX: Temp comment out
+			// Clear rotation statuses
+			for(var i = 0; i < blocks.length; i++) {
+				var block = blocks[i];
+				if(!block.isRotating) {
+					continue;
 				}
-				// XXX: Method 2
-				// Reposition everything. 
-				rubik.position(); // XXX COMMENTED OUT COMMENTED OUT TEMP
-			}, 600);
+				// XXX: Method 1
+				// XXX: Consider keeping this. 
+				// XXX: Pop the mat we pushed. 
+				//block.popMat(); // XXX: Temp comment out
+			}
 
+			// XXX: Method 2
+			// Reposition everything in OpenGL with respect to the new
+			// Rubik 3D vector positions. (Literally rebuilds everything)
 			callback();
+			rubik.position();
+
+			ROTATE_LOCK = false;
 		})
 		.start();
 }

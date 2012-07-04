@@ -14,10 +14,6 @@ var block;
 var blocks = [];
 var rubik = null;
 
-var matStack = new MatrixStack();
-
-var ROTATE_TYPE = 'y';
-
 function init() 
 {
 	scene = new THREE.Scene();
@@ -133,8 +129,8 @@ function render()
 		block.applyMats();
 	}
 
-	//camera.position.x += (mouseX - camera.position.x) * 0.9;
-	//camera.position.y += (-mouseY - camera.position.y-200) * 0.9;
+	camera.position.x += (mouseX - camera.position.x) * 0.9;
+	camera.position.y += (-mouseY - camera.position.y+1000) * 0.9;
 
 	renderer.render(scene, camera);
 }
