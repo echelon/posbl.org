@@ -108,15 +108,6 @@ function init()
 
 		$("#canvas").html(renderer.domElement);
 
-
-		/*var help = new THREE.AxisHelper();
-		help.position.x = -500;
-		help.position.y = -500;
-		scene.add(help);
-
-		var camHelp = new THREE.CameraHelper(camera);
-		scene.add(camHelp);*/
-
 		// Random rubik movement.
 		setInterval(function() {
 			switch(Math.round(rand(0, 10))) {

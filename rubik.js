@@ -58,16 +58,18 @@ var Rubik = function()
 	// Create the blocks. 
 	for(var i = 0; i < 27; i++) {
 		// XXX/TEMP: Set color of layers so it's easier to debug
-		var color = 0;
-		/*if(i < 9) {
-			color = COLORS.black;
+		/*var color = 0;
+		if(i < 9) {
+			color = COLORS[0];
 		}
 		else if(i < 18) {
-			color = COLORS.white;
+			color = COLORS[2];
 		}
 		else {
-			color = COLORS.red;
+			color = COLORS[4];
 		}*/
+
+		var color = randItem(COLORS);
 
 		var block = new Block(color);
 		block.add(scene);

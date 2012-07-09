@@ -1,15 +1,12 @@
 /**
  * Color constants
  */
-var COLORS = {
-	red:	0xcc0000,
-	green:	0x00cc00,
-	blue:	0x0000ff,
-	white:	0xdddddd,
-	orange: 0xffff00,
-	yellow: 0xff00ff,
-	black:	0x555555, // XXX: Remove later.
-}
+var COLORS = [
+	0xcc0000,
+	0xbbbbbb,
+	0xffffff,
+	0x555555,
+]
 
 /**
  * Block class.
