@@ -47,45 +47,6 @@ function init()
 	blocks[18].isRotating = 1;
 	blocks[19].isRotating = 1;
 	blocks[20].isRotating = 1;
-
-
-	// XXX: This is only because I use Vrome and it captures all
-	// keyboard input by default. 
-	$('input').focus();
-	$('body').click(function(event) {
-		$('input').focus();
-	});
-	$('input').keypress(function(event) {
-		switch(event.charCode) {
-			case 49: // Keyboard '1'
-				rotate_x1();
-				break;
-			case 50: // '2'
-				rotate_x2();
-				break;
-			case 51: // '3'
-				rotate_x3();
-				break;
-			case 52: // '4'
-				rotate_y1();
-				break;
-			case 53: // '5'
-				rotate_y2();
-				break;
-			case 54: // '6'
-				rotate_y3();
-				break;
-			case 55: // '7'
-				rotate_z1();
-				break;
-			case 56: // '8'
-				rotate_z2();
-				break;
-			case 57: // '9'
-				rotate_z3();
-				break;
-		}
-	});
 	
 	$(window).mousemove(function(event) {
 		lastX = mouseX;
@@ -112,31 +73,31 @@ function init()
 		setInterval(function() {
 			switch(Math.round(rand(0, 10))) {
 				case 0:
-					rotate_x1();
+					rubik.rotate_x1();
 					break;
 				case 1:
-					rotate_x2();
+					rubik.rotate_x2();
 					break;
 				case 2:
-					rotate_x3();
+					rubik.rotate_x3();
 					break;
 				case 3:
-					rotate_y1();
+					rubik.rotate_y1();
 					break;
 				case 4:
-					rotate_y2();
+					rubik.rotate_y2();
 					break;
 				case 5:
-					rotate_y3();
+					rubik.rotate_y3();
 					break;
 				case 6:
-					rotate_z1();
+					rubik.rotate_z1();
 					break;
 				case 7:
-					rotate_z2();
+					rubik.rotate_z2();
 					break;
 				case 8:
-					rotate_z3();
+					rubik.rotate_z3();
 					break;
 			}
 		}, 1000);
