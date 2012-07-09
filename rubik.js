@@ -138,19 +138,6 @@ var Rubik = function()
 
 	/* =================== ANIMATION CODE ===================== */
 
-	var oldAngle = {x: 0, y:0, z:0}; // TODO: DEPRECATE? 
-
-	// Swap rubik spots
-	// TODO/FIXME: Unused? If so, remove
-	this.swapPlaces = function(r1, r2)
-	{
-		var b1 = this.rubik[r1.x][r1.y][r1.z];
-		var b2 = this.rubik[r2.x][r2.y][r2.z];
-
-		this.rubik[r1.x][r1.y][r1.z] = b1;
-		this.rubik[r2.x][r2.y][r2.z] = b2;
-	}
-
 	// Mark all as non-rotating. 
 	this.rotateReset = function() 
 	{
