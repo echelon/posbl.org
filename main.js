@@ -1,17 +1,11 @@
-var camera, scene, renderer,
-geometry, material, mesh;
-
-var texture, material2;
+var camera, scene, renderer;
 var ambientLight;
-var mat, cube, mat2;
 
 var lastX = 0;
 var lastY = 0;
 var mouseX = 0;
 var mouseY = 0;
 
-var block;
-var blocks = [];
 var rubik = null;
 
 function init() 
@@ -28,25 +22,13 @@ function init()
 		10000	// far clipping
 	);
 
-
 	camera.position.z = 1000;
 	camera.position.x = 0;
 	camera.position.y = 0;
 
-	scene.add( camera );
+	scene.add(camera);
 
 	rubik = new Rubik();
-	blocks = rubik.blocks;
-
-	/*blocks[0].isRotating = 1;
-	blocks[1].isRotating = 1;
-	blocks[2].isRotating = 1;
-	blocks[9].isRotating = 1;
-	blocks[10].isRotating = 1;
-	blocks[11].isRotating = 1;
-	blocks[18].isRotating = 1;
-	blocks[19].isRotating = 1;
-	blocks[20].isRotating = 1;*/
 	
 	$(window).mousemove(function(event) {
 		lastX = mouseX;
@@ -56,10 +38,8 @@ function init()
 	});
 	
 	$(window).load(function() {
-
 		renderer = new THREE.CanvasRenderer();
-		renderer.setSize( window.innerWidth, 
-			window.innerHeight );
+		renderer.setSize(window.innerWidth, window.innerHeight);
 
 		// FIXME: Does lighting not work on canvas? 
 		var light = new THREE.DirectionalLight(0xffffff);

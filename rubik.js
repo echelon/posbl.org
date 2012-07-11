@@ -375,8 +375,8 @@ var Rubik = function()
 	this.render = function(rotMat) {
 		var block;
 
-		for(var i = 0; i < blocks.length; i++) {
-			block = blocks[i];
+		for(var i = 0; i < this.blocks.length; i++) {
+			block = this.blocks[i];
 
 			block.pushMat(rotMat)
 
@@ -392,8 +392,8 @@ var Rubik = function()
 	// Mark all as non-rotating. 
 	this._rotateReset = function() 
 	{
-		for(var i = 0; i < blocks.length; i++) {
-			blocks[i].isRotating = false;
+		for(var i = 0; i < this.blocks.length; i++) {
+			this.blocks[i].isRotating = false;
 		}
 	}
 
@@ -402,8 +402,8 @@ var Rubik = function()
 	{
 		// Push a new matrix. 
 		// Must be popped?  OR NO?
-		for(var i = 0; i < blocks.length; i++) {
-			var block = blocks[i];
+		for(var i = 0; i < this.blocks.length; i++) {
+			var block = this.blocks[i];
 			if(!block.isRotating) {
 				continue;
 			}
@@ -419,8 +419,8 @@ var Rubik = function()
 			.to(newAngle, 900)
 			.easing(TWEEN.Easing.Elastic.Out)
 			.onUpdate(function() {
-				for(var i = 0; i < blocks.length; i++) {
-					var block = blocks[i];
+				for(var i = 0; i < self.blocks.length; i++) {
+					var block = self.blocks[i];
 					if(!block.isRotating) {
 						continue;
 					}
@@ -443,8 +443,8 @@ var Rubik = function()
 			})
 			.onComplete(function() {
 				// Clear rotation statuses
-				for(var i = 0; i < blocks.length; i++) {
-					var block = blocks[i];
+				for(var i = 0; i < self.blocks.length; i++) {
+					var block = self.blocks[i];
 					if(!block.isRotating) {
 						continue;
 					}
