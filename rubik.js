@@ -33,6 +33,22 @@ var OLDcoords = [
 	[-1, -1, -1],
 ];
 
+
+// TODO: RandInt function. 
+var rand = function(a, b) {
+	return a + (b - a) *Math.random();
+}
+
+// TODO: Deprecate
+var randomImage = function() {
+	return IMAGES[Math.floor(Math.random()*IMAGES.length)];
+}
+
+// TODO: Support maps. 
+var randItem = function(list) {
+	return list[Math.floor(rand(0, list.length))];
+}
+
 var Rubik = function()
 {
 	/**
@@ -54,6 +70,140 @@ var Rubik = function()
 					[null, null, null],
 					[null, null, null]]
 	];
+
+	/**
+	 * Color constants
+	 */
+	var COLORS = [
+		0xcc0000,
+		0xbbbbbb,
+		0xffffff,
+		0x555555,
+	]
+
+	/**
+	 * Block class.
+	 * TODO: Better parameterization -- use object w/ named params. 
+	 */
+	var Block = function(color, size)
+	{
+		/**
+		 * CTOR
+		 */
+
+		var randColor = function() {
+			var colors = [
+				0x990000, 0xcc0000, 0xff0000, // reds
+				0x009900, 0x00cc00, 0x00ff00, // greens
+				0x000099, 0x0000cc, 0x0000ff, // blues
+				0x999900, 0xcccc00, 0xffff00, // yellows
+				0x990099, 0xcc00cc, 0xff00ff, // fushias 
+				0x009999, 0x00cccc, 0x00ffff, // cyans
+				0x999999, 0xcccccc // greys
+			]
+			return colors[Math.floor(rand(0, colors.length))];
+		}
+
+		var sz = size || 200;
+		var c = color || randColor();
+
+		/**
+		 * Object Members
+		 */
+
+		this.mat = new THREE.MeshBasicMaterial({
+			color: c,
+			overdraw: true,
+			transparent: true,
+			//blending: THREE.AdditiveBlending,
+			//blending: THREE.NormalBlending,
+			blending: THREE.SubtractiveBlending,
+			//blending: THREE.AdditiveAlphaBlending,
+			opacity: 0.9,
+			//wireframe: true
+		});
+
+		this.object = new THREE.Mesh(
+			new THREE.CubeGeometry(sz, sz, sz),
+			this.mat
+		);
+
+		this.object.castShadow = true;
+		this.object.receiveShadow = true;
+		this.object.matrixAutoUpdate = false;
+
+		// If the block is being animated
+		this.isMoving = false; 
+
+		// The position of the block in the fully assembled cube.
+		// Each dimension is either [-1, 0, 1]
+		// The coordinate {x=0, y=0, z=0} is the center block. 
+		this.position = {
+			x: 0,
+			y: 0,
+			z: 0
+		};
+
+		// Reset the Object Matrix.
+		// TODO: Better way? 
+		// TODO: Needed? 
+		this.resetObjectMatrix = function() {
+			this.object.matrix = new THREE.Matrix4();
+		}
+
+		// A temporary matrix stack. XXX/TESTING
+		this.matrixStack = [this.object.matrix.clone()];
+
+		/**
+		 * Methods 
+		 */
+
+		this.add = function(scene) {
+			scene.add(this.object);
+		}
+
+		/**
+		 * Matrix stack operations.
+		 */
+
+		this.pushMat = function(mat) {
+			this.matrixStack.push(mat);
+		}
+
+		this.popMat = function() {
+			if(this.matrixStack.length <= 1) {
+				return;
+			}
+			return this.matrixStack.pop();
+		}
+
+		this.topMat = function() {
+			return this.matrixStack[this.matrixStack.length -1];
+		}
+
+		// Set the top matrix (but not root)
+		this.setTopMat = function(mat) {
+			if(this.matrixStack.length <= 1) {
+				return;
+			}
+			this.matrixStack[this.matrixStack.length - 1] = mat;
+		}
+
+		// TODO: Don't multiply by self. Try this first.
+		this.applyMats = function() {
+			this.object.matrix = new THREE.Matrix4();
+			for(var i = this.matrixStack.length - 1; i >= 0; i--) {
+				var mat = this.matrixStack[i];
+				this.object.matrix.multiplySelf(mat);
+			}
+		}
+	}
+
+
+
+
+	/********************** REST OF CTOR ****************/ 
+
 
 	// Create the blocks. 
 	for(var i = 0; i < 27; i++) {
@@ -136,10 +286,111 @@ var Rubik = function()
 
 	this.position();
 
+	// TODO: uninstall the animation.
+	this.startRandomAnimation = function() {
+		var self = this;
+
+		// Random rubik movement.
+		setInterval(function() {
+			switch(Math.round(rand(0, 10))) {
+				case 0:
+					self.rotate_x1();
+					break;
+				case 1:
+					self.rotate_x2();
+					break;
+				case 2:
+					self.rotate_x3();
+					break;
+				case 3:
+					self.rotate_y1();
+					break;
+				case 4:
+					self.rotate_y2();
+					break;
+				case 5:
+					self.rotate_y3();
+					break;
+				case 6:
+					self.rotate_z1();
+					break;
+				case 7:
+					self.rotate_z2();
+					break;
+				case 8:
+					self.rotate_z3();
+					break;
+			}
+		}, 1000);
+	}
+
+	this.patternStage = 0;
+
+	// TODO: uninstall the animation.
+	this.startPatternAnimation = function() {
+		var self = this;
+
+		// Random rubik movement.
+		setInterval(function() {
+			switch(self.patternStage) {
+				case 0:
+					self.rotate_x1();
+					break;
+				case 1:
+					self.rotate_x2();
+					break;
+				case 2:
+					self.rotate_x3();
+					break;
+				case 3:
+					self.rotate_y1();
+					break;
+				case 4:
+					self.rotate_y2();
+					break;
+				case 5:
+					self.rotate_y3();
+					break;
+				case 6:
+					self.rotate_z1();
+					break;
+				case 7:
+					self.rotate_z2();
+					break;
+				case 8:
+					self.rotate_z3();
+					break;
+			}
+			self.patternStage = (self.patternStage + 1) % 9;
+		}, 1000);
+	}
+
+
+	/**
+	 * Position Blocks
+	 * XXX: MUST CALL IN RENDER LOOP. 
+	 * TODO: Rename rotMat. 
+	 * TODO: Better (documented) way to send translations to render loop
+	 */ 
+	this.render = function(rotMat) {
+		var block;
+
+		for(var i = 0; i < blocks.length; i++) {
+			block = blocks[i];
+
+			block.pushMat(rotMat)
+
+			block.object.updateMatrix();
+			block.applyMats();
+
+			block.popMat();
+		}
+	}
+
 	/* =================== ANIMATION CODE ===================== */
 
 	// Mark all as non-rotating. 
-	this.rotateReset = function() 
+	this._rotateReset = function() 
 	{
 		for(var i = 0; i < blocks.length; i++) {
 			blocks[i].isRotating = false;
@@ -147,7 +398,7 @@ var Rubik = function()
 	}
 
 	// Install new matrix in rotating blocks' stacks
-	this.installMatrices = function()
+	this._installMatrices = function()
 	{
 		// Push a new matrix. 
 		// Must be popped?  OR NO?
@@ -160,7 +411,7 @@ var Rubik = function()
 		}
 	}
 
-	this.installTween = function(newAngle, oldAngle, axis, callback)
+	this._installTween = function(newAngle, oldAngle, axis, callback)
 	{
 		var self = this;
 
@@ -241,7 +492,7 @@ var Rubik = function()
 			z: oldAngle.z + Math.PI/2
 		};
 
-		this.rotateReset();
+		this._rotateReset();
 
 		// Mark x1 rotational group as rotating. 
 		this.rubik[0][0][0].isRotating = true;
@@ -270,8 +521,8 @@ var Rubik = function()
 			self.rubik[0][1][2] = t;
 		}
 
-		this.installMatrices();
-		this.installTween(newAngle, oldAngle, 'x', swapCubes);
+		this._installMatrices();
+		this._installTween(newAngle, oldAngle, 'x', swapCubes);
 	}
 
 	this.rotate_x2 = function()
@@ -288,7 +539,7 @@ var Rubik = function()
 			z: oldAngle.z + Math.PI/2
 		};
 
-		this.rotateReset();
+		this._rotateReset();
 
 		// Mark x2 rotational group as rotating. 
 		this.rubik[1][0][0].isRotating = true;
@@ -317,8 +568,8 @@ var Rubik = function()
 			self.rubik[1][0][1] = t;
 		}
 
-		this.installMatrices();
-		this.installTween(newAngle, oldAngle, 'x', swapCubes);
+		this._installMatrices();
+		this._installTween(newAngle, oldAngle, 'x', swapCubes);
 	}
 
 	this.rotate_x3 = function()
@@ -335,7 +586,7 @@ var Rubik = function()
 			z: oldAngle.z + Math.PI/2
 		};
 
-		this.rotateReset();
+		this._rotateReset();
 
 		// Mark x3 rotational group as rotating. 
 		self.rubik[2][0][0].isRotating = true;
@@ -364,8 +615,8 @@ var Rubik = function()
 			self.rubik[2][0][1] = t;
 		}
 
-		this.installMatrices();
-		this.installTween(newAngle, oldAngle, 'x', swapCubes);
+		this._installMatrices();
+		this._installTween(newAngle, oldAngle, 'x', swapCubes);
 	}
 
 	this.rotate_y1 = function()
@@ -382,7 +633,7 @@ var Rubik = function()
 			z: oldAngle.z + Math.PI/2
 		};
 
-		this.rotateReset();
+		this._rotateReset();
 
 		// Mark y1 rotational group as rotating. 
 		this.rubik[0][2][0].isRotating = true;
@@ -411,8 +662,8 @@ var Rubik = function()
 			self.rubik[1][2][2] = t;
 		}
 
-		this.installMatrices();
-		this.installTween(newAngle, oldAngle, 'y', swapCubes);
+		this._installMatrices();
+		this._installTween(newAngle, oldAngle, 'y', swapCubes);
 	}
 
 	this.rotate_y2 = function()
@@ -429,7 +680,7 @@ var Rubik = function()
 			z: oldAngle.z + Math.PI/2
 		};
 
-		this.rotateReset();
+		this._rotateReset();
 
 		// Mark y2 rotational group as rotating. 
 		this.rubik[0][1][0].isRotating = true;
@@ -458,8 +709,8 @@ var Rubik = function()
 			self.rubik[1][1][2] = t;
 		}
 
-		this.installMatrices();
-		this.installTween(newAngle, oldAngle, 'y', swapCubes);
+		this._installMatrices();
+		this._installTween(newAngle, oldAngle, 'y', swapCubes);
 	}
 
 	this.rotate_y3 = function()
@@ -476,7 +727,7 @@ var Rubik = function()
 			z: oldAngle.z + Math.PI/2
 		};
 
-		this.rotateReset();
+		this._rotateReset();
 
 		// Mark y3 rotational group as rotating. 
 		this.rubik[0][0][0].isRotating = true;
@@ -505,8 +756,8 @@ var Rubik = function()
 			self.rubik[1][0][2] = t;
 		}
 
-		this.installMatrices();
-		this.installTween(newAngle, oldAngle, 'y', swapCubes);
+		this._installMatrices();
+		this._installTween(newAngle, oldAngle, 'y', swapCubes);
 	}
 
 	this.rotate_z1 = function()
@@ -523,7 +774,7 @@ var Rubik = function()
 			z: oldAngle.z + Math.PI/2
 		};
 
-		this.rotateReset();
+		this._rotateReset();
 
 		// Mark z1 rotational group as rotating. 
 		this.rubik[0][0][2].isRotating = true;
@@ -552,8 +803,8 @@ var Rubik = function()
 			self.rubik[0][1][2] = t;
 		}
 
-		this.installMatrices();
-		this.installTween(newAngle, oldAngle, 'z', swapCubes);
+		this._installMatrices();
+		this._installTween(newAngle, oldAngle, 'z', swapCubes);
 	}
 
 	this.rotate_z2 = function()
@@ -570,7 +821,7 @@ var Rubik = function()
 			z: oldAngle.z + Math.PI/2
 		};
 
-		this.rotateReset();
+		this._rotateReset();
 
 		// Mark z2 rotational group as rotating. 
 		this.rubik[0][0][1].isRotating = true;
@@ -599,8 +850,8 @@ var Rubik = function()
 			self.rubik[0][1][1] = t;
 		}
 
-		this.installMatrices();
-		this.installTween(newAngle, oldAngle, 'z', swapCubes);
+		this._installMatrices();
+		this._installTween(newAngle, oldAngle, 'z', swapCubes);
 	}
 
 	this.rotate_z3 = function()
@@ -617,7 +868,7 @@ var Rubik = function()
 			z: oldAngle.z + Math.PI/2
 		};
 
-		this.rotateReset();
+		this._rotateReset();
 
 		// Mark z3 rotational group as rotating. 
 		this.rubik[0][0][0].isRotating = true;
@@ -646,7 +897,7 @@ var Rubik = function()
 			self.rubik[0][1][0] = t;
 		}
 
-		this.installMatrices();
-		this.installTween(newAngle, oldAngle, 'z', swapCubes);
+		this._installMatrices();
+		this._installTween(newAngle, oldAngle, 'z', swapCubes);
 	}
 }

@@ -15,15 +15,15 @@ input {
 	color: #111;
 }
 
-#canvas {
+/*#canvas {
 	margin: auto;
 	padding: 0px;
 	width: 800px;
 	height: 600px;
 	border: 2px solid #ccc;
-}
+}*/
 
-canvas {
+#canvas {
 	width: 800px;
 	height: 600px;
 }

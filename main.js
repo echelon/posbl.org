@@ -38,7 +38,7 @@ function init()
 	rubik = new Rubik();
 	blocks = rubik.blocks;
 
-	blocks[0].isRotating = 1;
+	/*blocks[0].isRotating = 1;
 	blocks[1].isRotating = 1;
 	blocks[2].isRotating = 1;
 	blocks[9].isRotating = 1;
@@ -46,7 +46,7 @@ function init()
 	blocks[11].isRotating = 1;
 	blocks[18].isRotating = 1;
 	blocks[19].isRotating = 1;
-	blocks[20].isRotating = 1;
+	blocks[20].isRotating = 1;*/
 	
 	$(window).mousemove(function(event) {
 		lastX = mouseX;
@@ -69,38 +69,7 @@ function init()
 
 		$("#canvas").html(renderer.domElement);
 
-		// Random rubik movement.
-		setInterval(function() {
-			switch(Math.round(rand(0, 10))) {
-				case 0:
-					rubik.rotate_x1();
-					break;
-				case 1:
-					rubik.rotate_x2();
-					break;
-				case 2:
-					rubik.rotate_x3();
-					break;
-				case 3:
-					rubik.rotate_y1();
-					break;
-				case 4:
-					rubik.rotate_y2();
-					break;
-				case 5:
-					rubik.rotate_y3();
-					break;
-				case 6:
-					rubik.rotate_z1();
-					break;
-				case 7:
-					rubik.rotate_z2();
-					break;
-				case 8:
-					rubik.rotate_z3();
-					break;
-			}
-		}, 1000);
+		rubik.startPatternAnimation();
 
 		animate();	
 	});
@@ -128,19 +97,7 @@ function render()
 
 	y+= 0.005;
 
-	/**
-	 * Position Blocks
-	 */ 
-	for(var i = 0; i < blocks.length; i++) {
-		block = blocks[i];
-
-		block.pushMat(rotMat)
-
-		block.object.updateMatrix();
-		block.applyMats();
-
-		block.popMat();
-	}
+	rubik.render(rotMat);
 
 	//camera.position.x += (mouseX - camera.position.x) * 0.3;
 	//camera.position.y += (-mouseY - camera.position.y) * 0.3;
