@@ -72,7 +72,7 @@ function render()
 	var Y = Math.cos(y) * 100;
 
 	var rotMat = new THREE.Matrix4();
-	var tVec = new THREE.Vector3(0, 0, -100);
+	var tVec = new THREE.Vector3(300, 0, -700);
 	rotMat.translate(tVec);
 	rotMat.rotateY(y);
 	//rotMat.rotateZ(y);

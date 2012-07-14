@@ -10,6 +10,18 @@ var randItem = function(list) {
 
 var Molecule = function()
 {
+
+	// XXX XXX XXX 
+	// XXX XXX XXX 
+	// XXX XXX XXX 
+	// XXX XXX XXX 
+	// XXX XXX XXX 
+	//
+	var size = 30;
+	var spread = 25;
+
+
+
 	/**
 	 * All of the atoms in the molecule
 	 */
@@ -132,7 +144,6 @@ var Molecule = function()
 	/********************** REST OF CTOR ****************/ 
 
 
-	var size = 30;
 
 	var atomColors = {
 		'C': 0x555555,
@@ -144,10 +155,10 @@ var Molecule = function()
 
 	for(var i = 0; i < ATOMS.length/4; i++) 
 	{
-		/*if(i % 5 == 0) {
+		if(i % 4 == 0) { // dropping every 4 or 5
 			continue;
-		}*/
-		if(i > 700) {
+		}
+		if(i > 1800) {
 			break;
 		}
 		var color = atomColors[ATOMS[i*4+3]];
@@ -198,7 +209,7 @@ var Molecule = function()
 		}
 	}
 
-	this.position(20);
+	this.position(spread);
 
 	// TODO: uninstall the animation.
 	this.startRandomAnimation = function() {
