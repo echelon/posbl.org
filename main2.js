@@ -63,6 +63,7 @@ function animate()
 
 var y = 0;
 var z = 0;
+var r = 0;
 function render()
 {
 	TWEEN.update();
@@ -71,14 +72,15 @@ function render()
 	var Y = Math.cos(y) * 100;
 
 	var rotMat = new THREE.Matrix4();
-	var tVec = new THREE.Vector3(0, 0, -900);
+	var tVec = new THREE.Vector3(0, 0, -100);
 	rotMat.translate(tVec);
 	rotMat.rotateY(y);
 	//rotMat.rotateZ(y);
 
 	y+= 0.005;
+	r+= Math.PI / 300;
 
-	rubik.render(rotMat);
+	rubik.render(rotMat, r);
 
 	//camera.position.x += (mouseX - camera.position.x) * 0.3;
 	//camera.position.y += (-mouseY - camera.position.y) * 0.3;
