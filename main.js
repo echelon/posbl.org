@@ -7,6 +7,7 @@ var mouseX = 0;
 var mouseY = 0;
 
 var rubik = null;
+var rubik2 = null;
 
 function init() 
 {
@@ -29,6 +30,7 @@ function init()
 	scene.add(camera);
 
 	rubik = new Rubik();
+	rubik2 = new Rubik();
 	
 	$(window).mousemove(function(event) {
 		lastX = mouseX;
@@ -50,6 +52,7 @@ function init()
 		$("#canvas").html(renderer.domElement);
 
 		rubik.startPatternAnimation();
+		rubik2.startPatternAnimation();
 
 		animate();	
 	});
@@ -68,16 +71,23 @@ function render()
 	TWEEN.update();
 
 	var X = Math.sin(y) * 100;
+	var Y = Math.cos(y) * 100;
 
 	var rotMat = new THREE.Matrix4();
-	var tVec = new THREE.Vector3(0, X, 0);
+	var tVec = new THREE.Vector3(0, 500, -800);
 	rotMat.translate(tVec);
 	rotMat.rotateY(y);
 	rotMat.rotateZ(y);
 
+	var mat2 = new THREE.Matrix4();
+	mat2.translate(new THREE.Vector3(0, -500, -800));
+	mat2.rotateY(y);
+	mat2.rotateZ(y);
+
 	y+= 0.005;
 
 	rubik.render(rotMat);
+	rubik2.render(mat2);
 
 	//camera.position.x += (mouseX - camera.position.x) * 0.3;
 	//camera.position.y += (-mouseY - camera.position.y) * 0.3;
