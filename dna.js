@@ -8,6 +8,36 @@ var randItem = function(list) {
 	return list[Math.floor(rand(0, list.length))];
 }
 
+
+// XXX TEMP
+function generateSprite(r, g, b) {
+	var canvas = document.createElement( 'canvas' );
+	canvas.width = 80;
+	canvas.height = 80;
+
+	var context = canvas.getContext( '2d' );
+	var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
+	gradient.addColorStop( 0, 'rgba(255,255,255,1)' );
+	gradient.addColorStop( 0.2, 'rgba(0,255,255,1)' );
+	gradient.addColorStop( 0.4, 'rgba(' + r + ',' + g + ', ' + b + ',1)' );
+	gradient.addColorStop( 1, 'rgba(0,0,0,0)' );
+
+	context.fillStyle = gradient;
+	context.fillRect( 0, 0, canvas.width, canvas.height );
+
+	return canvas;
+}
+
+var sprites = {
+	H: generateSprite(100, 100, 100),
+	C: generateSprite(64, 64, 64),
+	O: generateSprite(64, 0, 0), 
+	N: generateSprite(0, 0, 64),
+	P: generateSprite(64, 0, 64)
+};
+
+var sprite = generateSprite(0, 0, 64);
+
 var Molecule = function()
 {
 
@@ -41,21 +71,21 @@ var Molecule = function()
 	 * Atom class.
 	 * TODO: Better parameterization: use object w/ named params. 
 	 */
-	var Atom = function(color, size, isCoord)
+	var Atom = function(species, size, isCoord)
 	{
 		/**
 		 * CTOR
 		 */
 
 		var rad = size || 200;
-		var c = color || 0xffffff;
+		//var c = color || 0xffffff;
 
 		/**
 		 * Object Members
 		 */
 
 		this.mat = new THREE.MeshBasicMaterial({
-			color: c,
+			//color: c,
 			overdraw: true,
 			transparent: true,
 			doubleSided: true,
@@ -67,34 +97,12 @@ var Molecule = function()
 			//wireframe: true
 		});
 
-		// XXX TEMP
-		function generateSprite() {
-
-			var canvas = document.createElement( 'canvas' );
-			canvas.width = 16;
-			canvas.height = 16;
-
-			var context = canvas.getContext( '2d' );
-			var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
-			gradient.addColorStop( 0, 'rgba(255,255,255,1)' );
-			gradient.addColorStop( 0.2, 'rgba(0,255,255,1)' );
-			gradient.addColorStop( 0.4, 'rgba(0,0,64,1)' );
-			gradient.addColorStop( 1, 'rgba(0,0,0,1)' );
-
-			context.fillStyle = gradient;
-			context.fillRect( 0, 0, canvas.width, canvas.height );
-
-			return canvas;
-
-		}
-
-
 		this.object = new THREE.Particle(
 			new THREE.ParticleBasicMaterial({
-				map: new THREE.Texture(generateSprite()),
-				//map: this.mat,
-				//blending: three.AdditiveBlending;
+				map: new THREE.Texture(sprites[species]),
+				blending: THREE.AdditiveBlending
 		}));
+
 		/*this.object = new THREE.Mesh(
 			//new THREE.CubeGeometry(rad, rad, rad),
 			new THREE.PlaneGeometry(rad, rad),
@@ -200,7 +208,8 @@ var Molecule = function()
 			break;
 		}
 		var color = atomColors[ATOMS[i*4+3]];
-		var atom = new Atom(color, size);
+		var species = ATOMS[i*4+3];
+		var atom = new Atom(species, size);
 		atom.add(scene); // TODO: Remove global
 		atom.object.updateMatrix();
 		atom.position.x = ATOMS[i*4] - xAvg; // XXX: Translation to center
