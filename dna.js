@@ -41,7 +41,7 @@ var Molecule = function()
 	 * Atom class.
 	 * TODO: Better parameterization: use object w/ named params. 
 	 */
-	var Atom = function(color, size)
+	var Atom = function(color, size, isCoord)
 	{
 		/**
 		 * CTOR
@@ -72,6 +72,11 @@ var Molecule = function()
 			new THREE.PlaneGeometry(rad, rad),
 			this.mat
 		);
+
+		if(isCoord) {
+			this.object = new THREE.AxisHelper();
+			this.object.scale.set(5, 5, 5);
+		}
 
 		// TODO: Relative atom position in molecule. 
 		// TODO: How to represent this? 
@@ -153,6 +158,11 @@ var Molecule = function()
 		'P': 0x990099,
 	};
 
+	// Offsets to make origin dead center (by simple mean)
+	var xAvg = -16.637427;
+	var yAvg = 4.203991;
+	var zAvg = -4.718040741;
+
 	for(var i = 0; i < ATOMS.length/4; i++) 
 	{
 		if(i % 4 == 0) { // dropping every 4 or 5
@@ -165,11 +175,23 @@ var Molecule = function()
 		var atom = new Atom(color, size);
 		atom.add(scene); // TODO: Remove global
 		atom.object.updateMatrix();
-		atom.position.x = ATOMS[i*4];
-		atom.position.z = ATOMS[i*4+1];
-		atom.position.y = ATOMS[i*4+2];
+		atom.position.x = ATOMS[i*4] - xAvg; // XXX: Translation to center
+		atom.position.z = ATOMS[i*4+1] - zAvg;
+		atom.position.y = ATOMS[i*4+2] - yAvg;
 		this.atoms.push(atom);
 	}
+
+	// Add to center
+	var color = atomColors[ATOMS[i*4+3]];
+	var atom = new Atom(0x009900, 100, true);
+	atom.add(scene); // TODO: Remove global
+	atom.object.updateMatrix();
+	atom.position.x = 0;
+	atom.position.z = 0;
+	atom.position.y = 0;
+	this.atoms.push(atom);
+
+
 
 	this.init = function() 
 	{
@@ -290,6 +312,17 @@ var Molecule = function()
 		}, 1000);*/
 	}
 
+	this.pushMat = function(mat) {
+		for(var i = 0; i < this.atoms.length; i++) {
+			this.atoms[i].pushMat(mat);
+		}
+	}
+
+	this.popMat = function() {
+		for(var i = 0; i < this.atoms.length; i++) {
+			this.atoms[i].popMat();
+		}
+	}
 
 	/**
 	 * Position Blocks
@@ -310,8 +343,8 @@ var Molecule = function()
 				.rotateX(z * 2)
 				.rotateY(z * 4)
 				.rotateZ(z * 3);
-
-			z += Math.PI;
+			//z += 0.2;
+			z += Math.PI / 4;
 
 			atom.pushMat(rotMat);
 
@@ -320,6 +353,15 @@ var Molecule = function()
 
 			atom.popMat();
 		}
+
+		// XXX: Hack for axis helper. 
+		var axis = this.atoms[this.atoms.length - 1];
+		axis.pushMat(rotMat);
+		axis.matrixStack[0].identity()
+			.makeScale(5, 5, 5);
+		axis.object.updateMatrix();
+		axis.applyMats();
+		axis.popMat();
 	}
 
 	/* =================== ANIMATION CODE ===================== */
