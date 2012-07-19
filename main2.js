@@ -69,7 +69,7 @@ var DnaParams = function()
 {
 	this.xTransInit = 0;
 	this.yTransInit = 0;
-	this.zTransInit = -1000;
+	this.zTransInit = -500;
 
 	this.xRotAbs = 0;
 	this.yRotAbs = 0;
