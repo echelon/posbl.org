@@ -2,7 +2,7 @@
 body {
 	background-color: #111;
 	overflow: hidden;
-	margin: 0px;
+	margin: 0;
 	padding: 0px;
 }
 
@@ -17,15 +17,7 @@ input {
 	color: #111;
 }
 
-/*#canvas {
-	margin: auto;
-	padding: 0px;
+#canvas {
 	width: 800px;
 	height: 600px;
-	border: 2px solid #ccc;
-}*/
-
-#canvas {
-	width: 8000px;
-	height: 6000px;
 }

@@ -13,7 +13,7 @@ function init()
 {
 	scene = new THREE.Scene();
 
-	var cDom = $('#canvas');
+	var cDom = $('body');
 	var aspect = cDom.innerWidth() / cDom.innerHeight();
 
 	camera = new THREE.PerspectiveCamera(
@@ -48,10 +48,16 @@ function init()
 		light.castShadow = true; // TODO
 		scene.add(light);
 
-		$("#canvas").html(renderer.domElement);
-
-		mol.startPatternAnimation();
+		$("body").html(renderer.domElement);
 		animate();	
+	});
+
+	$(window).resize(function() {
+		renderer.setSize($(window).width(), 
+				$(window).height());
+
+		//$('canvas').width($(window).innerWidth());
+		//$('canvas').height($(window).innerHeight());
 	});
 }
 
@@ -62,7 +68,7 @@ function animate()
 }
 
 var rotMat = new THREE.Matrix4();
-var yAuto = 0.1;
+var yAuto = 0.07;
 var yAutoState = 0.0;
 
 function render()
@@ -75,8 +81,6 @@ function render()
 	yAutoState %= Math.PI*2;
 
 	mol.setMat(1, rotMat);
-
-	ident = new THREE.Matrix4();
 	mol.render();
 
 	renderer.render(scene, camera);

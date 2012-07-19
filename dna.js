@@ -31,8 +31,8 @@ function generateSprite(r, g, b, radius) {
 	var b2 = Math.min(Math.round(b+20), 255);
 
 	gradient.addColorStop(0, 'rgba('+r2+','+ g2+','+ b2+',1)');
-	gradient.addColorStop(0.3, 'rgba('+r+','+g+','+b+',1)');
-	gradient.addColorStop(1, 'rgba(0,0,0,0)');
+	gradient.addColorStop(0.4, 'rgba('+r+','+g+','+b+',1)');
+	gradient.addColorStop(0.8, 'rgba(0,0,0,0)');
 
 	context.fillStyle = gradient;
 	context.fillRect( 0, 0, canvas.width, canvas.height );
@@ -115,24 +115,15 @@ var Molecule = function()
 			z: 0
 		};
 
-		this.object.castShadow = true;
-		this.object.receiveShadow = true;
+		// XXX: We're doing our own matrix ops
 		this.object.matrixAutoUpdate = false;
 
-		// Reset the Object Matrix.
-		// TODO: Better way? 
-		// TODO: Needed? 
-		this.resetObjectMatrix = function() {
-			this.object.matrix = new THREE.Matrix4();
-		}
-
-		// A temporary matrix stack. XXX/TESTING
+		// XXX: Don't touch the matrix stack!
 		this.matrixStack = [
-			this.object.matrix.clone(),
-			this.object.matrix.clone(),
-			this.object.matrix.clone()
-				.rotateZ(0.625), // Visually nice leaning angle
-			this.object.matrix.clone(),
+			this.object.matrix.clone(), // Atom positions
+			this.object.matrix.clone(), // Molecule rotation
+			this.object.matrix.clone()  // Leaning angle
+				.rotateZ(0.625)
 		];
 
 		// Add the atom to the scene
@@ -203,15 +194,22 @@ var Molecule = function()
 		if(i % 5 == 0) { // dropping every 4 or 5
 			//continue;
 		}
-		if(i > 1800) {
+		var species = ATOMS[i*4+3];
+		if(i < 700) {
+			species = randItem(['O', 'C', 'P']);
+		}
+		else {
+			species = randItem(['N', 'H']);
+		}
+		if(i > 1500) {
 			break;
 		}
-		var color = atomColors[ATOMS[i*4+3]];
-		var species = ATOMS[i*4+3];
 		var atom = new Atom(species, size);
 		atom.add(scene); // TODO: Remove global
 		atom.object.updateMatrix();
-		atom.position.x = ATOMS[i*4] - xAvg; // XXX: Translation to center
+
+		// Position and translate entire molecule center
+		atom.position.x = ATOMS[i*4] - xAvg;
 		atom.position.z = ATOMS[i*4+1] - zAvg;
 		atom.position.y = ATOMS[i*4+2] - yAvg;
 		this.atoms.push(atom);
@@ -247,85 +245,6 @@ var Molecule = function()
 	}
 
 	this.position(spread);
-
-	// TODO: uninstall the animation.
-	this.startRandomAnimation = function() {
-		/*var self = this;
-
-		// Random rubik movement.
-		setInterval(function() {
-			switch(Math.round(rand(0, 10))) {
-				case 0:
-					self.rotate_x1();
-					break;
-				case 1:
-					self.rotate_x2();
-					break;
-				case 2:
-					self.rotate_x3();
-					break;
-				case 3:
-					self.rotate_y1();
-					break;
-				case 4:
-					self.rotate_y2();
-					break;
-				case 5:
-					self.rotate_y3();
-					break;
-				case 6:
-					self.rotate_z1();
-					break;
-				case 7:
-					self.rotate_z2();
-					break;
-				case 8:
-					self.rotate_z3();
-					break;
-			}
-		}, 1000);*/
-	}
-
-	this.patternStage = 0;
-
-	// TODO: uninstall the animation.
-	this.startPatternAnimation = function() {
-		/*var self = this;
-
-		// Random rubik movement.
-		setInterval(function() {
-			switch(self.patternStage) {
-				case 0:
-					self.rotate_x1();
-					break;
-				case 1:
-					self.rotate_x2();
-					break;
-				case 2:
-					self.rotate_x3();
-					break;
-				case 3:
-					self.rotate_y1();
-					break;
-				case 4:
-					self.rotate_y2();
-					break;
-				case 5:
-					self.rotate_y3();
-					break;
-				case 6:
-					self.rotate_z1();
-					break;
-				case 7:
-					self.rotate_z2();
-					break;
-				case 8:
-					self.rotate_z3();
-					break;
-			}
-			self.patternStage = (self.patternStage + 1) % 9;
-		}, 1000);*/
-	}
 
 	this.setMat = function(matNo, mat) {
 		for(var i = 0; i < this.atoms.length; i++) {
