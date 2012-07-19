@@ -7,6 +7,7 @@ var mouseX = 0;
 var mouseY = 0;
 
 var rubik = null;
+var dnaParams = null;
 
 function init() 
 {
@@ -51,8 +52,36 @@ function init()
 
 		rubik.startPatternAnimation();
 
+		dnaParams = new DnaParams();
+		installGui(dnaParams);
+
 		animate();	
 	});
+}
+
+var DnaParams = function() {
+
+	this.xRotInc = 0;
+	this.yRotInc = 0;
+	this.zRotInc = 0;
+
+	this.xRotAbs = 0;
+	this.yRotAbs = 0;
+	this.zRotAbs = 0;
+
+}
+
+/**
+ * Install Dat.gui
+ */
+var installGui = function(dna) {
+	var gui = new dat.GUI();
+	gui.add(dna, 'xRotInc', 0, 0.5);
+	gui.add(dna, 'yRotInc', 0, 0.5);
+	gui.add(dna, 'zRotInc', 0, 0.5);
+	gui.add(dna, 'xRotAbs', 0, Math.PI*2);
+	gui.add(dna, 'yRotAbs', 0, Math.PI*2);
+	gui.add(dna, 'zRotAbs', 0, Math.PI*2);
 }
 
 function animate()
@@ -61,24 +90,41 @@ function animate()
 	render();
 }
 
-var y = 0;
-var z = 0;
-var r = 0;
+var xRotNow = 0;
+var yRotNow = 0;
+var zRotNow = 0;
+var r = Math.PI / 2;
 function render()
 {
 	TWEEN.update();
 
-	var X = Math.sin(y) * 100;
-	var Y = Math.cos(y) * 100;
-
 	var rotMat = new THREE.Matrix4();
 	var tVec = new THREE.Vector3(300, 0, -700);
 	rotMat.translate(tVec);
-	rotMat.rotateY(y);
-	//rotMat.rotateZ(y);
 
-	y+= 0.005;
-	r+= Math.PI / 300;
+	if(dnaParams.xRotAbs) {
+		rotMat.rotateX(dnaParams.xRotAbs);
+	}
+	else {
+		rotMat.rotateX(xRotNow);
+		xRotNow += dnaParams.xRotInc;
+	}
+
+	if(dnaParams.yRotAbs) {
+		rotMat.rotateX(dnaParams.yRotAbs);
+	}
+	else {
+		rotMat.rotateX(yRotNow);
+		yRotNow += dnaParams.yRotInc;
+	}
+
+	if(dnaParams.zRotAbs) {
+		rotMat.rotateX(dnaParams.zRotAbs);
+	}
+	else {
+		rotMat.rotateX(zRotNow);
+		zRotNow += dnaParams.zRotInc;
+	}
 
 	rubik.render(rotMat, r);
 
