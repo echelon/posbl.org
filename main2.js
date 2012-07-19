@@ -6,7 +6,7 @@ var lastY = 0;
 var mouseX = 0;
 var mouseY = 0;
 
-var rubik = null;
+var mol = null;
 var axis = null;
 var dnaParams = null;
 
@@ -30,12 +30,7 @@ function init()
 
 	scene.add(camera);
 
-	rubik = new Molecule();
-
-	/*axis = new THREE.AxisHelper();
-	axis.scale.set(5, 5, 5);
-	axis.matrix.autoUpdate = false;
-	scene.add(axis);*/
+	mol = new Molecule();
 	
 	$(window).mousemove(function(event) {
 		lastX = mouseX;
@@ -56,7 +51,7 @@ function init()
 
 		$("#canvas").html(renderer.domElement);
 
-		rubik.startPatternAnimation();
+		mol.startPatternAnimation();
 
 		dnaParams = new DnaParams();
 		installGui(dnaParams);
@@ -81,7 +76,7 @@ var DnaParams = function()
 
 	this.xRotAbs2 = 0;
 	this.yRotAbs2 = 0;
-	this.zRotAbs2 = 0.42;
+	this.zRotAbs2 = 0;// 0.42;
 
 	this.yAutoTop = 0.0;
 	this.yAutoTopState = 0;
@@ -116,8 +111,8 @@ var installGui = function(dna) {
 	auto.add(dna, 'yAutoBottom', 0, 0.5).step(0.01);
 	auto.add(dna, 'yAutoBottomState', 0, Math.PI*2).listen();
 
-	rubik.atoms[rubik.atoms.length-1].object.visible = false;
-	auto.add(rubik.atoms[rubik.atoms.length-1].object, 'visible'); 
+	mol.atoms[mol.atoms.length-1].object.visible = false;
+	auto.add(mol.atoms[mol.atoms.length-1].object, 'visible'); 
 }
 
 function animate()
@@ -126,9 +121,6 @@ function animate()
 	render();
 }
 
-var xRotNow = 0;
-var yRotNow = 0;
-var zRotNow = 0;
 function render()
 {
 	TWEEN.update();
@@ -164,35 +156,14 @@ function render()
 	tMat.rotateY(dnaParams.yRotAbs);
 	tMat.rotateZ(dnaParams.zRotAbs);
 	
-	//rotMat.multiplySelf(bMat);
-
-	/*for(var i = 0; i < rubik.atoms.length; i++) {
-		var atom = rubik.atoms[i];
-		atom.pushMat(rotMat);
-	}*/
-
-	rubik.pushMat(rotMat);
+	mol.pushMat(rotMat);
+	mol.pushMat(tMat);
 
 	ident = new THREE.Matrix4();
-	rubik.render(tMat, 0);
+	mol.render();
 
-	/*for(var i = 0; i < rubik.atoms.length; i++) {
-		var atom = rubik.atoms[i];
-		atom.popMat();
-	}*/
-
-	rubik.popMat();
-
-	/*var rotMat2 = rotMat.clone();
-	rotMat2.scale(2, 2, 2);
-	axis.updateMatrix();
-	axis.matrix.multiplySelf(rotMat2);*/
-	//axis.matrix = rotMat2;
-
-	//camera.position.x += (mouseX - camera.position.x) * 0.3;
-	//camera.position.y += (-mouseY - camera.position.y) * 0.3;
-
-	//camera.rotation.y += 0.01;
+	mol.popMat();
+	mol.popMat();
 
 	renderer.render(scene, camera);
 }

@@ -133,8 +133,10 @@ var Molecule = function()
 
 		// A temporary matrix stack. XXX/TESTING
 		this.matrixStack = [
-			this.object.matrix.clone(), // XXX: Testing two
+			this.object.matrix.clone(),
+			this.object.matrix.clone(),
 			this.object.matrix.clone()
+				.rotateZ(0.42),
 		];
 
 		// Add the atom to the scene
@@ -253,7 +255,7 @@ var Molecule = function()
 			}
 			// Reset root stack matrix to identity, then
 			// translate. 
-			atom.matrixStack[1]
+			atom.matrixStack[0]
 				.identity()
 				.translate(coords);
 
@@ -368,38 +370,20 @@ var Molecule = function()
 	 * TODO: Rename rotMat. 
 	 * TODO: Better (documented) way to send translations to render loop
 	 */ 
-	this.render = function(rotMat, y) {
+	this.render = function() {
 		var atom;
-
-		var z = y;
-
 		for(var i = 0; i < this.atoms.length; i++) {
 			atom = this.atoms[i];
-
-			atom.matrixStack[0]
-				.identity()
-				.rotateX(z * 2)
-				.rotateY(z * 4)
-				.rotateZ(z * 3);
-			//z += 0.2;
-			z += Math.PI / 4;
-
-			atom.pushMat(rotMat);
-
 			atom.object.updateMatrix();
 			atom.applyMats();
-
-			atom.popMat();
 		}
 
 		// XXX: Hack for axis helper. 
 		var axis = this.atoms[this.atoms.length - 1];
-		axis.pushMat(rotMat);
 		axis.matrixStack[0].identity()
 			.makeScale(5, 5, 5);
 		axis.object.updateMatrix();
 		axis.applyMats();
-		axis.popMat();
 	}
 
 	/* =================== ANIMATION CODE ===================== */
