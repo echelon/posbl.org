@@ -183,8 +183,6 @@ function render()
 
 	rubik.popMat();
 
-
-
 	/*var rotMat2 = rotMat.clone();
 	rotMat2.scale(2, 2, 2);
 	axis.updateMatrix();

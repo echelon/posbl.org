@@ -10,24 +10,29 @@ var randItem = function(list) {
 
 
 // XXX TEMP
-// Based on 
+// Based on THREE.js sprite example
 function generateSprite(r, g, b, radius) {
-	var canvas = document.createElement( 'canvas' );
+	var canvas = document.createElement('canvas');
 	canvas.width = radius;
-	canvas.height = radius; // 50
+	canvas.height = radius;
 
-	var context = canvas.getContext( '2d' );
-	var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
+	var context = canvas.getContext('2d');
+	var gradient = context.createRadialGradient(
+			canvas.width / 2,
+			canvas.height / 2,
+			0,
+			canvas.width / 2,
+			canvas.height / 2,
+			canvas.width / 2
+	);
 
 	var r2 = Math.min(Math.round(r+20), 255);
 	var g2 = Math.min(Math.round(g+20), 255);
 	var b2 = Math.min(Math.round(b+20), 255);
 
 	gradient.addColorStop(0, 'rgba('+r2+','+ g2+','+ b2+',1)');
-	//gradient.addColorStop( 0.2, 'rgba(0,255,255,1)' );
-	//gradient.addColorStop(0.1, 'rgba('+r+','+g+','+b+',1)');
 	gradient.addColorStop(0.3, 'rgba('+r+','+g+','+b+',1)');
-	gradient.addColorStop( 1, 'rgba(0,0,0,0)' );
+	gradient.addColorStop(1, 'rgba(0,0,0,0)');
 
 	context.fillStyle = gradient;
 	context.fillRect( 0, 0, canvas.width, canvas.height );
@@ -35,17 +40,8 @@ function generateSprite(r, g, b, radius) {
 	return canvas;
 }
 
-var atomColors = {
-'C': 0x555555,
-'H': 0xeeeeee,
-'O': 0x990000,
-'N': 0x000099,
-'P': 0x990099,
-};
-
-
 var sprites = {
-	H: generateSprite(255, 255, 255, 30),
+	H: generateSprite(255, 255, 255, 40),
 	C: generateSprite(99, 0, 0, 50),
 	N: generateSprite(187, 187, 187, 55),
 	O: generateSprite(204, 0, 0, 60), 
@@ -204,7 +200,10 @@ var Molecule = function()
 	for(var i = 0; i < ATOMS.length/4; i++) 
 	{
 		if(i % 4 == 0) { // dropping every 4 or 5
-			continue;
+			//continue;
+		}
+		if(i % 5 == 0) { // dropping every 4 or 5
+			//continue;
 		}
 		if(i > 1800) {
 			break;
