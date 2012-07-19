@@ -75,10 +75,10 @@ var Rubik = function()
 	 * Color constants
 	 */
 	var COLORS = [
-		0xcc0000,
-		0xbbbbbb,
 		0xffffff,
+		0xbbbbbb,
 		0x555555,
+		0xcc0000,
 	]
 
 	/**

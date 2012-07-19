@@ -19,13 +19,14 @@ function generateSprite(r, g, b, radius) {
 	var context = canvas.getContext( '2d' );
 	var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
 
-	var r2 = Math.min(r * 2, 255);
-	var g2 = Math.min(g * 2, 255);
-	var b2 = Math.min(b * 2, 255);
+	var r2 = Math.min(Math.round(r+20), 255);
+	var g2 = Math.min(Math.round(g+20), 255);
+	var b2 = Math.min(Math.round(b+20), 255);
 
 	gradient.addColorStop(0, 'rgba('+r2+','+ g2+','+ b2+',1)');
 	//gradient.addColorStop( 0.2, 'rgba(0,255,255,1)' );
-	gradient.addColorStop(0.4, 'rgba(' + r + ',' + g + ', ' + b + ',1)');
+	//gradient.addColorStop(0.1, 'rgba('+r+','+g+','+b+',1)');
+	gradient.addColorStop(0.3, 'rgba('+r+','+g+','+b+',1)');
 	gradient.addColorStop( 1, 'rgba(0,0,0,0)' );
 
 	context.fillStyle = gradient;
@@ -44,11 +45,11 @@ var atomColors = {
 
 
 var sprites = {
-	H: generateSprite(200, 200, 200, 30),
-	C: generateSprite(85, 85, 85, 50),
-	N: generateSprite(0, 0, 153, 55),
-	O: generateSprite(153, 0, 0, 60), 
-	P: generateSprite(153, 0, 153, 65)
+	H: generateSprite(255, 255, 255, 30),
+	C: generateSprite(99, 0, 0, 50),
+	N: generateSprite(187, 187, 187, 55),
+	O: generateSprite(204, 0, 0, 60), 
+	P: generateSprite(55, 55, 55, 65)
 };
 
 var sprite = generateSprite(0, 0, 64);
@@ -98,20 +99,6 @@ var Molecule = function()
 		/**
 		 * Object Members
 		 */
-
-		this.mat = new THREE.MeshBasicMaterial({
-			//color: c,
-			overdraw: true,
-			transparent: true,
-			doubleSided: true,
-			//blending: THREE.AdditiveBlending,
-			//blending: THREE.NormalBlending,
-			//blending: THREE.AdditiveAlphaBlending,
-			blending: THREE.SubtractiveBlending,
-			opacity: 0.9,
-			//wireframe: true
-		});
-
 		this.object = new THREE.Particle(
 			new THREE.ParticleBasicMaterial({
 				map: new THREE.Texture(sprites[species]),
