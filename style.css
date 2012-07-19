@@ -2,6 +2,8 @@
 body {
 	background-color: #111;
 	overflow: hidden;
+	margin: 0px;
+	padding: 0px;
 }
 
 img {
@@ -24,6 +26,6 @@ input {
 }*/
 
 #canvas {
-	width: 800px;
-	height: 600px;
+	width: 8000px;
+	height: 6000px;
 }

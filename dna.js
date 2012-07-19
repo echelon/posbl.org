@@ -83,7 +83,7 @@ var Molecule = function()
 	 * Atom class.
 	 * TODO: Better parameterization: use object w/ named params. 
 	 */
-	var Atom = function(species, size, isCoord)
+	var Atom = function(species, size)
 	{
 		/**
 		 * CTOR
@@ -106,11 +106,6 @@ var Molecule = function()
 			new THREE.PlaneGeometry(rad, rad),
 			this.mat
 		);*/
-
-		if(isCoord) {
-			this.object = new THREE.AxisHelper();
-			this.object.scale.set(5, 5, 5);
-		}
 
 		// TODO: Relative atom position in molecule. 
 		// TODO: How to represent this? 
@@ -136,7 +131,8 @@ var Molecule = function()
 			this.object.matrix.clone(),
 			this.object.matrix.clone(),
 			this.object.matrix.clone()
-				.rotateZ(0.42),
+				.rotateZ(0.625), // Visually nice leaning angle
+			this.object.matrix.clone(),
 		];
 
 		// Add the atom to the scene
@@ -221,18 +217,6 @@ var Molecule = function()
 		this.atoms.push(atom);
 	}
 
-	// Add to center
-	var color = atomColors[ATOMS[i*4+3]];
-	var atom = new Atom(0x009900, 100, true);
-	atom.add(scene); // TODO: Remove global
-	atom.object.updateMatrix();
-	atom.position.x = 0;
-	atom.position.z = 0;
-	atom.position.y = 0;
-	this.atoms.push(atom);
-
-
-
 	this.init = function() 
 	{
 	}
@@ -257,17 +241,8 @@ var Molecule = function()
 			// translate. 
 			atom.matrixStack[0]
 				.identity()
-				.translate(coords);
-
-			// XXX: Probably a good thing to do for added
-			// certainty. This will remove any 'tweening' 
-			// stacks.
-			// XXX: OR actually, bad... once rotation of cube 
-			// faces becomes important. 
-			// XXX XXX XXX XXX -- temporarily commented out (DNA)
-			/*while(atom.matrixStack.length >= 2) {
-				atom.matrixStack.pop();
-			}*/
+				.rotateZ(0.42) // XXX: Set the molecule upright
+				.translate(coords)
 		}
 	}
 
@@ -352,6 +327,12 @@ var Molecule = function()
 		}, 1000);*/
 	}
 
+	this.setMat = function(matNo, mat) {
+		for(var i = 0; i < this.atoms.length; i++) {
+			this.atoms[i].matrixStack[matNo] = mat;
+		}
+	}
+
 	this.pushMat = function(mat) {
 		for(var i = 0; i < this.atoms.length; i++) {
 			this.atoms[i].pushMat(mat);
@@ -377,13 +358,6 @@ var Molecule = function()
 			atom.object.updateMatrix();
 			atom.applyMats();
 		}
-
-		// XXX: Hack for axis helper. 
-		var axis = this.atoms[this.atoms.length - 1];
-		axis.matrixStack[0].identity()
-			.makeScale(5, 5, 5);
-		axis.object.updateMatrix();
-		axis.applyMats();
 	}
 
 	/* =================== ANIMATION CODE ===================== */
