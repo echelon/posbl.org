@@ -68,7 +68,7 @@ function animate()
 }
 
 var rotMat = new THREE.Matrix4();
-var yAuto = 0.07;
+var yAuto = -0.07;
 var yAutoState = 0.0;
 
 function render()
