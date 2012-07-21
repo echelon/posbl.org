@@ -219,8 +219,7 @@ var Rubik = function()
 			color = COLORS[4];
 		}*/
 
-		var color = randItem(COLORS);
-
+		var color = COLORS[i%COLORS.length];
 		var block = new Block(color);
 		block.add(scene);
 		block.object.updateMatrix();

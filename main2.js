@@ -6,8 +6,8 @@ var lastY = 0;
 var mouseX = 0;
 var mouseY = 0;
 
+// Objects
 var mol = null;
-var axis = null;
 
 function init() 
 {
