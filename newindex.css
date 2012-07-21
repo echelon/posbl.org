@@ -45,8 +45,20 @@ canvas {
 }
 
 #text h1, #text h2, #text h3 {
-	text-align: right;
 	padding-right: 20px;
+}
+
+.heading:nth-child(3n+1) {
+	color: #f00;
+	text-align: right;
+}
+.heading:nth-child(3n+2) {
+	color: #0f0;
+	text-align: center;
+}
+.heading:nth-child(3n+3) {
+	color: #00f;
+	text-align: left;
 }
 
 #text {
@@ -72,6 +84,18 @@ h1, h2, h3, h4, h5 {
 h1 { font-size: 4em; }
 h2 { font-size: 3em; }
 h3 { font-size: 2em; }
+
+#sidelink {
+	-webkit-transform: rotate(90deg);
+	color: #fff;
+	font-size: 3em;
+	position: fixed;
+	left: 0px;
+	top: 50%;
+	padding: 0px;
+	z-index: 100;
+	border: 1px solid #ff0;
+}
 
 #name {
 	font-family: "neuropol_x";
