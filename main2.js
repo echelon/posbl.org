@@ -23,8 +23,8 @@ function init()
 		10000	// far clipping
 	);
 
-	camera.position.z = 1500;
-	camera.position.x = 0;
+	camera.position.z = 500;
+	camera.position.x = 300;
 	camera.position.y = 0;
 
 	scene.add(camera);
