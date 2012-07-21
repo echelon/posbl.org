@@ -1,0 +1,93 @@
+
+@font-face {
+	font-family: "neuropol_x";
+	src: url('./font/neuropol_x.ttf');
+}
+@font-face {
+	font-family: "Quantum Round";
+	src: url('./font/quantrnd.ttf');
+}
+
+#logo {
+	font-family: "Quantum Round";
+	z-index: 5;
+	position: absolute;
+	text-align: center;
+	top: 0px;
+	width: 100%;
+	color: rgba(0,0,0,0); 
+	font-size: 4em;
+	padding: 0px;
+	margin: 5px;
+	text-shadow: 
+		0px 0px 1px #fff,
+		9px 9px 11px #000
+}
+
+#logo a {
+	color: inherit;
+	text-decoration: none;
+}
+
+body {
+	overflow-x: hidden;
+}
+
+canvas {
+	position: fixed;
+	overflow: hidden;
+}
+
+#textwrap {
+	position: absolute;
+	max-width: 800px;
+	top: 0px;
+}
+
+#text {
+	color: #eee;
+	padding: 5px 20px 20px 20px;
+	background-color: rgba(0, 0, 0, 0.95);
+	margin: 50px 50px 0px 50px;
+	/* Border radius */
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.55);
+	font-family: "Ubuntu",  "Lora", "Droid Serif";
+	text-align: justify;
+}
+
+h1, h2, h3, h4, h5 {
+	font-family: "Andale mono";
+	padding: 10px 0px 10px 0px;
+	margin: 0px;
+}
+
+h1 {
+	font-size: 4em;
+}
+
+h2 {
+	font-size: 3em;
+}
+
+h3 {
+	font-size: 2em;
+}
+
+#name {
+	font-family: "neuropol_x";
+	z-index: 5;
+	text-align: center;
+	width: 100%;
+	bottom: 0px;
+	color: rgba(0,0,0,0); 
+	font-size: 2.0em;
+	padding: 0px;
+	margin: -2px 0px 2px 0px;
+	text-shadow: 
+		0px 0px 1px #e5e5e5,
+		3px 3px 7px #000
+}
+
