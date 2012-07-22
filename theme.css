@@ -1,0 +1,48 @@
+@font-face {
+	font-family: "neuropol_x";
+	src: url('./font/neuropol_x.ttf');
+}
+@font-face {
+	font-family: "Quantum Round";
+	src: url('./font/quantrnd.ttf');
+}
+
+body {
+	background-color: #111;
+	color: #eee;
+
+	/* TODO: Flawed -- depends on body size. */
+	background-image: -ms-radial-gradient(center, 
+		ellipse farthest-corner, #444444 0%, #000000 100%);
+	background-image: -moz-radial-gradient(center, 
+		ellipse farthest-corner, #444444 0%, #000000 100%);
+	background-image: -o-radial-gradient(center, 
+		ellipse farthest-corner, #444444 0%, #000000 100%);
+	background-image: -webkit-gradient(radial, center center, 0, 
+		center center, 448, color-stop(0, #444444), color-stop(1, #000000));
+	background-image: -webkit-radial-gradient(center, 
+		ellipse farthest-corner, #444444 0%, #000000 100%);
+	background-image: radial-gradient(ellipse farthest-corner 
+		at center, #444444 0%, #000000 100%);
+}
+
+a {
+	color: #990000;
+	text-decoration: none;
+	font-weight: none;
+}
+
+#logo {
+	font-family: "Quantum Round";
+	color: rgba(0,0,0,0); 
+	font-size: 4em;
+	text-shadow: 
+		0px 0px 1px #fff,
+		9px 9px 11px #000
+}
+
+#logo a {
+	color: inherit;
+	text-decoration: none;
+}
+

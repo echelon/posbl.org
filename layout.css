@@ -1,0 +1,33 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	overflow-x: hidden;
+}
+
+#canvas {
+	width: 800px;
+	height: 600px;
+}
+
+#logo {
+	z-index: 5;
+	position: absolute;
+	text-align: center;
+	top: 0px;
+	width: 100%;
+	padding: 0px;
+	margin: 5px;
+}
+
+#textwrap {
+	position: absolute;
+	max-width: 680px;
+	top: 0px;
+}
+
+canvas {
+	position: fixed;
+	overflow: hidden;
+}
+
+
