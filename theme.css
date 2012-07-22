@@ -78,3 +78,12 @@ h3 { font-size: 2em; }
 		3px 3px 7px #000
 }
 
+#portrait {
+	float: right;
+	margin: 15px;
+}
+#portrait img {
+	border-radius: 18px;
+	-webkit-border-radius: 18px;
+	-moz-border-radius: 18px;
+}
