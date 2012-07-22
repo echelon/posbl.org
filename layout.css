@@ -123,3 +123,30 @@ canvas {
 h2 {
 	clear: both;
 }
+
+#videos {
+	padding: 10px;
+	margin: auto;
+	text-align: center;
+}
+
+#videos img {
+	margin: 5px 5px;
+	padding: 0px;
+
+	-webkit-box-shadow: 0 0 10px rgba(255,255,255,.6), inset 0 0 1px rgba(255,255,255,1);
+	-moz-box-shadow: 0 0 10px rgba(255,255,255,.6), inset 0 0 1px rgba(255,255,255,1);
+	box-shadow: 0 0 10px rgba(255,255,255,.6), inset 0 0 1px rgba(255,255,255,1);
+
+}
+
+#videos img.hover {
+	-webkit-box-shadow: 0 0 10px rgba(255,0,0,.6), inset 0 0 1px rgba(255,0,0,1);
+	-moz-box-shadow: 0 0 10px rgba(255,0,0,.6), inset 0 0 1px rgba(255,0,0,1);
+	box-shadow: 0 0 15px rgba(255,0,0,.6), inset 0 0 1px rgba(255,0,0,1);
+}
+
+.item {
+	text-align: left;
+	margin-bottom: 10px;
+}

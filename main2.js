@@ -13,7 +13,7 @@ function init()
 {
 	scene = new THREE.Scene();
 
-	var cDom = $('body');
+	var cDom = $(window);
 	var aspect = cDom.innerWidth() / cDom.innerHeight();
 
 	camera = new THREE.PerspectiveCamera(
@@ -23,9 +23,13 @@ function init()
 		10000	// far clipping
 	);
 
-	camera.position.z = 800;
-	camera.position.x = 200;
-	camera.position.y = 0;
+	var X_INIT = 400
+	var Y_INIT = 0;
+	var Z_INIT = 1000; 
+
+	camera.position.x = X_INIT;
+	camera.position.y = Y_INIT;
+	camera.position.z = Z_INIT;
 
 	scene.add(camera);
 
@@ -74,10 +78,20 @@ function init()
 		// Between 0 and 1. 
 		var scrollPos = $(document).scrollTop() / BOTTOM;
 
-		var z = 800 -  Math.round(500*scrollPos);
-		var y = 0 -  Math.round(200*scrollPos);
-		camera.position.z = z;
+		var x = X_INIT - Math.round(X_INIT*scrollPos);
+		var y = Y_INIT //+ Math.round(100*scrollPos);
+		var z = Z_INIT - Math.round(Z_INIT*scrollPos);
+		var xRot = 0 - Math.PI/2 * scrollPos;
+		var yRot = 0 - Math.PI/10 * scrollPos;
+		var zRot = 0 - Math.PI/10 * scrollPos;
+
+		camera.position.x = x;
 		camera.position.y = y;
+		camera.position.z = z;
+
+		camera.rotation.x = xRot;
+		camera.rotation.y = yRot;
+		camera.rotation.z = zRot;
 	});
 }
 
@@ -88,7 +102,7 @@ function animate()
 }
 
 var rotMat = new THREE.Matrix4();
-var yAuto = -0.07;
+var yAuto = -0.05;
 var yAutoState = 0.0;
 
 function render()
