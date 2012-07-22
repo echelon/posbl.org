@@ -23,8 +23,8 @@ function init()
 		10000	// far clipping
 	);
 
-	camera.position.z = 500;
-	camera.position.x = 300;
+	camera.position.z = 800;
+	camera.position.x = 200;
 	camera.position.y = 0;
 
 	scene.add(camera);
@@ -48,7 +48,8 @@ function init()
 		light.castShadow = true; // TODO
 		scene.add(light);
 
-		$("body").html(renderer.domElement);
+		//$("body").html(renderer.domElement); // XXX: No resize issues, but...
+		$("#canvas").html(renderer.domElement);
 		animate();	
 	});
 
@@ -58,6 +59,25 @@ function init()
 
 		//$('canvas').width($(window).innerWidth());
 		//$('canvas').height($(window).innerHeight());
+	});
+
+	$(window).scroll(function(ev) {
+		// FIXME: Something is broken about $(document).height
+		var height = Math.max(
+			$(document).height(),
+			$('body').height(),
+			$('#main').height(),
+			$('#text').height());
+		var TOP = 0;
+		var BOTTOM = height - $(window).height();
+
+		// Between 0 and 1. 
+		var scrollPos = $(document).scrollTop() / BOTTOM;
+
+		var z = 800 -  Math.round(500*scrollPos);
+		var y = 0 -  Math.round(200*scrollPos);
+		camera.position.z = z;
+		camera.position.y = y;
 	});
 }
 

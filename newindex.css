@@ -31,6 +31,7 @@
 
 body {
 	overflow-x: hidden;
+	color: #eee;
 }
 
 canvas {
@@ -40,39 +41,27 @@ canvas {
 
 #textwrap {
 	position: absolute;
-	max-width: 800px;
+	max-width: 680px;
 	top: 0px;
-}
-
-#text h1, #text h2, #text h3 {
-	padding-right: 20px;
-}
-
-.heading:nth-child(3n+1) {
-	color: #f00;
-	text-align: right;
-}
-.heading:nth-child(3n+2) {
-	color: #0f0;
-	text-align: center;
-}
-.heading:nth-child(3n+3) {
-	color: #00f;
-	text-align: left;
 }
 
 #text {
 	color: #eee;
-	padding: 5px 20px 20px 20px;
+	padding: 20px 20px 20px 20px;
 	background-color: rgba(0, 0, 0, 0.95);
 	margin: 50px 50px 0px 50px;
 	/* Border radius */
-	-webkit-border-radius: 20px;
-	-moz-border-radius: 20px;
-	border-radius: 20px;
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
 	box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.55);
 	font-family: "Ubuntu",  "Lora", "Droid Serif";
 	text-align: justify;
+}
+
+#text h1, #text h2, #text h3 {
+	padding-left: 20px;
+	text-align: left;
 }
 
 h1, h2, h3, h4, h5 {
@@ -86,12 +75,11 @@ h2 { font-size: 3em; }
 h3 { font-size: 2em; }
 
 #sidelink {
-	-webkit-transform: rotate(90deg);
 	color: #fff;
 	font-size: 3em;
 	position: fixed;
-	left: 0px;
-	top: 50%;
+	right: 0px;
+	top: 20%;
 	padding: 0px;
 	z-index: 100;
 	border: 1px solid #ff0;
