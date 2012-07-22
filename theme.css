@@ -12,7 +12,7 @@ body {
 	color: #eee;
 
 	/* TODO: Flawed -- depends on body size. */
-	background-image: -ms-radial-gradient(center, 
+	/*background-image: -ms-radial-gradient(center, 
 		ellipse farthest-corner, #444444 0%, #000000 100%);
 	background-image: -moz-radial-gradient(center, 
 		ellipse farthest-corner, #444444 0%, #000000 100%);
@@ -23,13 +23,24 @@ body {
 	background-image: -webkit-radial-gradient(center, 
 		ellipse farthest-corner, #444444 0%, #000000 100%);
 	background-image: radial-gradient(ellipse farthest-corner 
-		at center, #444444 0%, #000000 100%);
+		at center, #444444 0%, #000000 100%);*/
 }
 
 a {
 	color: #990000;
 	text-decoration: none;
 	font-weight: none;
+}
+
+#content {
+	color: #eee;
+	background-color: rgba(0, 0, 0, 0.95);
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
+	box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.55);
+	font-family: "Ubuntu",  "Lora", "Droid Serif";
+	text-align: justify;
 }
 
 #logo {

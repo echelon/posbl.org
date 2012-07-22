@@ -1,16 +1,3 @@
-#text {
-	color: #eee;
-	padding: 20px 20px 20px 20px;
-	background-color: rgba(0, 0, 0, 0.95);
-	margin: 50px 50px 0px 50px;
-	/* Border radius */
-	-webkit-border-radius: 25px;
-	-moz-border-radius: 25px;
-	border-radius: 25px;
-	box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.55);
-	font-family: "Ubuntu",  "Lora", "Droid Serif";
-	text-align: justify;
-}
 
 #text h1, #text h2, #text h3 {
 	padding-left: 20px;
@@ -26,17 +13,6 @@ h1, h2, h3, h4, h5 {
 h1 { font-size: 4em; }
 h2 { font-size: 3em; }
 h3 { font-size: 2em; }
-
-#sidelink {
-	color: #fff;
-	font-size: 3em;
-	position: fixed;
-	right: 0px;
-	top: 20%;
-	padding: 0px;
-	z-index: 100;
-	border: 1px solid #ff0;
-}
 
 #name {
 	font-family: "neuropol_x";

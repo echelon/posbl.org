@@ -4,25 +4,44 @@ body {
 	overflow-x: hidden;
 }
 
-#canvas {
-	width: 800px;
-	height: 600px;
+#main {
+	margin: auto;
+	width: 680px;
+}
+
+#content {
+	margin: -26px 50px 0px 50px;
+	padding: 20px 20px 20px 20px;
 }
 
 #logo {
 	z-index: 5;
-	position: absolute;
+	/*position: absolute;*/
 	text-align: center;
-	top: 0px;
 	width: 100%;
 	padding: 0px;
 	margin: 5px;
 }
 
-#textwrap {
-	position: absolute;
-	max-width: 680px;
-	top: 0px;
+#sidelink {
+	position: fixed;
+	top: 100px;
+	left: 50%;
+	margin-left: 280px;
+	width: 70px;
+	right: 0px;
+	color: #fff;
+	font-size: 3em;
+	padding: 0px;
+	z-index: 100;
+}
+
+#canvas {
+	position: fixed;
+	width: 800px;
+	height: 600px;
+	top: 0;
+	z-index: -50;
 }
 
 canvas {
