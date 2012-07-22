@@ -9,6 +9,8 @@ var mouseY = 0;
 // Objects
 var mol = null;
 
+// TODO: DNA molecule should default to orientation straight upward.
+// Simply rotate camera at start. This will also let us get rid of a matrix
 function init() 
 {
 	scene = new THREE.Scene();
@@ -23,7 +25,7 @@ function init()
 		10000	// far clipping
 	);
 
-	var X_INIT = 400
+	var X_INIT = 700
 	var Y_INIT = 0;
 	var Z_INIT = 1000; 
 
@@ -41,8 +43,9 @@ function init()
 		mouseX = event.pageX;
 		mouseY = event.pageY;
 	});
-	
-	$(window).load(function() {
+
+	// Already preloaded
+	//$(window).load(function() {
 		renderer = new THREE.CanvasRenderer();
 		renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -55,7 +58,7 @@ function init()
 		//$("body").html(renderer.domElement); // XXX: No resize issues, but...
 		$("#canvas").html(renderer.domElement);
 		animate();	
-	});
+	//});
 
 	$(window).resize(function() {
 		renderer.setSize($(window).width(), 

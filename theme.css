@@ -6,6 +6,14 @@
 	font-family: "Quantum Round";
 	src: url('./font/quantrnd.ttf');
 }
+@font-face {
+	font-family: "Ubuntu";
+	src: url('./font/Ubuntu-R.ttf');
+}
+@font-face {
+	font-family: "Ubuntu Light";
+	src: url('./font/Ubuntu-L.ttf');
+}
 
 body {
 	background-color: #111;
@@ -36,12 +44,12 @@ a {
 	-moz-border-radius: 25px;
 	border-radius: 25px;
 	box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.55);
-	font-family: "Ubuntu",  "Lora", "Droid Serif";
+	font-family: "Ubuntu", arial;
 	text-align: justify;
 }
 
 #logo {
-	font-family: "Quantum Round";
+	font-family: "Quantum Round", arial;
 	color: rgba(0,0,0,0); 
 	font-size: 4em;
 	text-shadow: 
@@ -55,7 +63,7 @@ a {
 }
 
 h1, h2, h3, h4, h5 {
-	font-family: "Andale mono";
+	font-family: "Ubuntu Light", "Andale mono", arial;
 	padding: 10px 0px 10px 0px;
 	margin: 0px;
 }
@@ -70,7 +78,7 @@ h2 { font-size: 3em; }
 h3 { font-size: 2em; }
 
 #name {
-	font-family: "neuropol_x";
+	font-family: "neuropol_x", arial;
 	color: rgba(0,0,0,0); 
 	font-size: 2.0em;
 	text-shadow: 

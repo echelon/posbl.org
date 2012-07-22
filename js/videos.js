@@ -4,6 +4,7 @@
 var installVideos = function()
 {
 	var div = $('#videos');
+	div.html('');
 
 	var makeUrl = function(id, num) {
 		return 'http://img.youtube.com/vi/' + id + '/' + num + '.jpg';
@@ -51,6 +52,7 @@ var installVideos = function()
 var installPresentations = function()
 {
 	var div = $('#presentations');
+	div.html('');
 
 	for(var i = 0; i < PRESENTATIONS.length; i++) {
 		var pre = PRESENTATIONS[i];
@@ -85,23 +87,5 @@ var installPresentations = function()
 
 		div.append(item);
 	}
-
-
 }
 
-/*	
-					<div class="item">
-						<div class="itemimg">
-							<img src="/img/old/sq_domtree.png">
-						</div>
-						<div class="itemdesc">
-							<a href="#">A Boolean Logical Model of TCR Signaling</a>
-							<span class="itemdate">April 26, 2012</span>
-{
-		title: "Alzheimer's cell-physiologic/physiopathy presentation",
-		date: "April 26, 2010",
-		descr: "My 60-minute presentation on the physiology of Alzheimer's disease with respect to the Amyloid-&beta; and Tau hypothesis. <em>WARNING:</em> Long load time.",
-		img: "http://possibilistic.org/presentation/alzheimers-cell-phys/img/tau-pdb.png",
-		url: 
-
-		*/
