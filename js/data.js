@@ -13,6 +13,20 @@ var VIDEOS = [
  */
 var PROJECTS = [
 	{
+		title: "Robotics Mischief",
+		date: "2010, 2012",
+		descr: "A C++ robot controller daemon that takes instructions over a ZeroMQ socket. Clients have been written for joystick, keyboard, and computer vision/AI control.",
+		img: "/img/icons/robot.png",
+		url: "https://github.com/echelon/robot2"
+	},
+	{
+		title: "Javascript Slideshow Software",
+		date: "2010&ndash;2012",
+		descr: "Parses Markdown files into presentation slides. Markdown makes writing and editing simple. Includes a timer and transition effects.",
+		img: "/img/icons/projector.jpg",
+		url: "https://github.com/echelon/present.js"
+	},
+	{
 		title: "Javascript IP Cam Viewer",
 		date: "2011",
 		descr: "Displays a wall of webcams or security cameras. Beware of memory leaks; page auto-refresh to purge memory needs to be implemented.",
@@ -41,7 +55,7 @@ var PROJECTS = [
 var PRESENTATIONS = [
 	{
 		title: "A Boolean Logical Model of TCR Signaling",
-		date: "April 26, 2012",
+		date: "Apr, 2012",
 		descr: "Discusses a paper on building a Boolean network representing the T-Cell signaling pathways downstream of the TCR.",
 		img: "http://possibilistic.org/presentation/advimm/img/advimm/matrix.png",
 		url: "http://possibilistic.org/presentation/advimm/"
@@ -55,14 +69,14 @@ var PRESENTATIONS = [
 	},
 	{
 		title: "Hantavirus Pulmonary Syndrome",
-		date: "Nov 30, 2010",
+		date: "Nov, 2010",
 		descr: "Presentation on Hantavirus molecular biology and pathology.",
 		img: "http://possibilistic.org/presentation/hps/img/SNV_TEM.jpg",
 		url: "http://possibilistic.org/presentation/hps/"
 	},
 	{
 		title: "Alzheimer's physiopathy",
-		date: "April 26, 2010",
+		date: "Apr, 2010",
 		descr: "My 60-minute presentation on the physiology of Alzheimer's disease with respect to the Amyloid-&beta; and Tau hypothesis.",
 		img: "http://possibilistic.org/presentation/alzheimers-cell-phys/img/tau-pdb.png",
 		url: "http://possibilistic.org/presentation/alzheimers-cell-phys/"
