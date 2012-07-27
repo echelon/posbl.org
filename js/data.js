@@ -9,6 +9,33 @@ var VIDEOS = [
 ]
 
 /**
+ * Projects data
+ */
+var PROJECTS = [
+	{
+		title: "Javascript IP Cam Viewer",
+		date: "2011",
+		descr: "Displays a wall of webcams or security cameras. Beware of memory leaks; page auto-refresh to purge memory needs to be implemented.",
+		img: "/img/icons/ipcam.jpg",
+		url: "/misc/ipcam/"
+	},
+	{
+		title: "Open Source Flylab Clone",
+		date: "2010",
+		descr: "Designed to replace proprietary paywall software published by expensive textbook companies. Work in progress.",
+		img: "/img/icons/drosophila.jpg",
+		url: "/misc/flylab/"
+	},
+	{
+		title: "StrategyWiki",
+		date: "2005",
+		descr: "A copyleft videogame strategy guide wiki.",
+		img: "/img/icons/strategywiki.png",
+		url: "http://strategywiki.org/wiki/Main_Page"
+	},
+]
+
+/**
  * Presentation data
  */
 var PRESENTATIONS = [
@@ -36,16 +63,9 @@ var PRESENTATIONS = [
 	{
 		title: "Alzheimer's physiopathy",
 		date: "April 26, 2010",
-		descr: "My 60-minute presentation on the physiology of Alzheimer's disease with respect to the Amyloid-&beta; and Tau hypothesis. <em>WARNING:</em> Long load time.",
+		descr: "My 60-minute presentation on the physiology of Alzheimer's disease with respect to the Amyloid-&beta; and Tau hypothesis.",
 		img: "http://possibilistic.org/presentation/alzheimers-cell-phys/img/tau-pdb.png",
 		url: "http://possibilistic.org/presentation/alzheimers-cell-phys/"
-	},
-	{
-		title: "Presentation on C. elegans SNR-5",
-		date: "April 28, 2008",
-		descr: "Slides for a bioinformatics presentation on the Caenorhabditis elegans gene, snr-5. Presents findings on homology, intron/exon prediction, mutants, gene function, etc. (I was a biology novice at this point--I didn't even know what the stages of mitosis were!)",
-		img: "http://possibilistic.org/img/sq_celegans.png",
-		url: "http://possibilistic.org/presentation/c.elegans-snr5"
 	}
 ]
 

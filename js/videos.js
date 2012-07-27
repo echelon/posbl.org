@@ -1,4 +1,48 @@
 /**
+ * Install "items"
+ */
+var installItems = function(selector, items)
+{
+	var div = $(selector);
+	div.html('');
+
+	for(var i = 0; i < items.length; i++) {
+		var pre = items[i];
+
+		var item = $('<div>')
+			.addClass('item')
+			.append($('<div>')
+					.addClass('itemimg')
+					.append($('<a>')
+						.attr('href', pre.url)
+						.html($('<img>')
+							.attr('src', pre.img)
+						)
+					)
+			)
+			.append($('<div>')
+					.addClass('itemdesc')
+					.append($('<div>')
+						.addClass('itemtitle')
+						.append($('<a>')
+							.html(pre.title)
+							.attr('href', pre.url)
+						)
+						.append(' ')
+						.append($('<span>')
+							.addClass('itemdate')
+							.html(pre.date)
+						)
+					)
+					.append(pre.descr)
+			);
+
+		div.append(item);
+	}
+}
+
+
+/**
  * Install Youtube video thumbnail animations and links
  */
 var installVideos = function()
@@ -46,46 +90,4 @@ var installVideos = function()
 	}
 }
 
-/**
- * Install presentations
- */
-var installPresentations = function()
-{
-	var div = $('#presentations');
-	div.html('');
-
-	for(var i = 0; i < PRESENTATIONS.length; i++) {
-		var pre = PRESENTATIONS[i];
-
-		var item = $('<div>')
-			.addClass('item')
-			.append($('<div>')
-					.addClass('itemimg')
-					.append($('<a>')
-						.attr('href', pre.url)
-						.html($('<img>')
-							.attr('src', pre.img)
-						)
-					)
-			)
-			.append($('<div>')
-					.addClass('itemdesc')
-					.append($('<div>')
-						.addClass('itemtitle')
-						.append($('<a>')
-							.html(pre.title)
-							.attr('href', pre.url)
-						)
-						.append(' ')
-						.append($('<span>')
-							.addClass('itemdate')
-							.html(pre.date)
-						)
-					)
-					.append(pre.descr)
-			);
-
-		div.append(item);
-	}
-}
 

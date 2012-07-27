@@ -14,9 +14,10 @@
 		<!-- Style -->
 		<link rel="stylesheet" type="text/css" href="./theme.css" />
 
-		<!-- Import Ubuntu Light, Normal, and Medium -->
-		<link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500'
+		<!-- Import Ubuntu Light, Normal, Italic, and Medium -->
+		<link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,400italic' 
 			rel='stylesheet' type='text/css'>
+
 
 	</head>
 	<body>
@@ -43,8 +44,7 @@
 
 				<!-- Projects -->
 				<h2 class="heading">projects</h2>
-				<div id="projects"></div>
-				<p>These will be online shortly.</p>
+				<div id="projects">Loading...</div>
 
 				<!-- Presentations --> 
 				<h2 class="heading">presentations</h2>
@@ -93,8 +93,9 @@
 		<script type="text/javascript"> 
 			$(function() { 
 				init(); 
+				installItems('#projects', PROJECTS);
+				installItems('#presentations', PRESENTATIONS);
 				installVideos();
-				installPresentations();
 			});
 		</script>
 	</body>

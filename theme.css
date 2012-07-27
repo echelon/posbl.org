@@ -1,3 +1,7 @@
+/**
+ * Load Fonts.
+ * Ubuntu font loads with Google Web Fonts CDN
+ */
 @font-face {
 	font-family: "neuropol_x";
 	src: url('./font/neuropol_x.ttf');
@@ -7,6 +11,9 @@
 	src: url('./font/quantrnd.ttf');
 }
 
+/**
+ * Main layout and theme
+ */
 body {
 	margin: 0px;
 	padding: 0px;
@@ -93,7 +100,7 @@ canvas {
 
 #name {
 	z-index: 5;
-	margin: -2px 0px 2px 0px;
+	margin: 4px 0px 4px 0px;
 	padding: 0px;
 	text-align: center;
 	width: 100%;
@@ -175,6 +182,9 @@ h2 {
 	clear: both;
 }
 
+/**
+ * Video Gallery
+ */
 #videos {
 	padding: 10px;
 	margin: auto;
@@ -185,21 +195,31 @@ h2 {
 	margin: 5px 5px;
 	padding: 0px;
 
-	-webkit-box-shadow: 0 0 10px rgba(255,255,255,.6), inset 0 0 1px rgba(255,255,255,1);
-	-moz-box-shadow: 0 0 10px rgba(255,255,255,.6), inset 0 0 1px rgba(255,255,255,1);
-	box-shadow: 0 0 10px rgba(255,255,255,.6), inset 0 0 1px rgba(255,255,255,1);
-
+	-webkit-box-shadow: 0 0 10px rgba(255,255,255,.6), 
+		inset 0 0 1px rgba(255,255,255,1);
+	-moz-box-shadow: 0 0 10px rgba(255,255,255,.6), 
+		inset 0 0 1px rgba(255,255,255,1);
+	box-shadow: 0 0 10px rgba(255,255,255,.6), 
+		inset 0 0 1px rgba(255,255,255,1);
 }
 
 #videos img.hover {
-	-webkit-box-shadow: 0 0 10px rgba(238,16,33,.6), inset 0 0 1px rgba(238,16,33,1);
-	-moz-box-shadow: 0 0 10px rgba(238,16,33,.6), inset 0 0 1px rgba(238,16,33,1);
-	box-shadow: 0 0 15px rgba(238,16,33,.6), inset 0 0 1px rgba(238,16,33,1);
+	-webkit-box-shadow: 0 0 10px rgba(238,16,33,.6), 
+		inset 0 0 1px rgba(238,16,33,1);
+	-moz-box-shadow: 0 0 10px rgba(238,16,33,.6), 
+		inset 0 0 1px rgba(238,16,33,1);
+	box-shadow: 0 0 15px rgba(238,16,33,.6), 
+		inset 0 0 1px rgba(238,16,33,1);
 }
 
 a {
 	color: #ee1021;
 	text-decoration: underline;
+}
+
+p {
+	margin: 0px 0px 0.6em 0px;
+	padding: 0px;
 }
 
 h1, h2, h3, h4, h5 {
