@@ -1,0 +1,91 @@
+/** 
+ * Brandon Thomas <echelon@gmail.com> 2008
+ * Possibilistic / Webapp CSS
+ *
+ * 100%-height ref: http://codingforums.com/archive/index.php?t-67420.html
+ */
+
+a img { border: 0px; }
+a { color: #aaf; }
+
+html, body {
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background: #ccc;
+	color: #fff;
+	background-image: url("/theme/img/bg-linear.gif");
+	background-attachment: fixed;
+}
+
+#container {
+	width: 800px;
+	margin: 0px auto 0px auto;
+	background-image: url("/theme/img/bar-bg40.png");
+	min-height: 100%;
+}
+
+#main {
+	margin: 0px;
+	padding: 0px 30px 0px 30px;
+}
+
+
+#logo {
+	text-align: left;
+	padding: 22px 0px 0px 50px;
+}
+
+#logo h1 {
+	/*margin: 0px 3px 5px 3px;*/
+}
+
+#links {
+	width: 250px;
+	height: 25px;
+	text-align: right;
+	padding: 0px 25px 0px 0px;
+	margin: 40px 0px 0px 0px;
+	float: right;
+}
+
+#header {
+	padding-top: 15px;
+}
+
+.backnav {
+	font-size: 0.85em;
+	font-style: italic;
+}
+
+#box {
+	padding: 15px 30px 0px 30px;
+}
+
+.imglist li {
+	list-style: none;
+	padding-bottom: 10px;
+	clear: both;
+}
+
+.fimg {
+	float: left;
+	margin-right: 15px;
+}
+
+.editdate {
+	font-size: 0.85em;
+	font-style: italic;
+}
+
+hr {
+	border: 0;
+	color: #777;
+	background-color: #777;
+	height: 1px;
+}
