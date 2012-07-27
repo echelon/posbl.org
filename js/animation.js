@@ -60,15 +60,10 @@ function init()
 		animate();	
 	//});
 
-	$(window).resize(function() {
-		renderer.setSize($(window).width(), 
-				$(window).height());
-
-		//$('canvas').width($(window).innerWidth());
-		//$('canvas').height($(window).innerHeight());
-	});
-
-	$(window).scroll(function(ev) {
+	/**
+	 * Place the camera according to scroll position.
+	 */
+	var placeCamera = function() {
 		// FIXME: Something is broken about $(document).height
 		var height = Math.max(
 			$(document).height(),
@@ -95,7 +90,25 @@ function init()
 		camera.rotation.x = xRot;
 		camera.rotation.y = yRot;
 		camera.rotation.z = zRot;
+	}
+
+	$(window).resize(function() {
+		renderer.setSize($(window).width(), 
+				$(window).height());
+
+		// FIXME: Best way to replace camera? 
+		var aspect = cDom.innerWidth() / cDom.innerHeight();
+		camera = new THREE.PerspectiveCamera(
+			75,		// fov
+			aspect, // aspect
+			1,		// near clipping
+			10000	// far clipping
+		);
+		scene.add(camera);
+		placeCamera();
 	});
+
+	$(window).scroll(function(ev) { placeCamera(); });
 }
 
 function animate()
