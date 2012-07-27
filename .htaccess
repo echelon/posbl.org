@@ -1,0 +1,30 @@
+# GENERIC HTACCESS FILE 
+
+RewriteEngine On
+Options -Indexes
+
+# Redirect Moved Resources
+RewriteRule ^flylab/?$		/misc/flylab/ [L,R=301]
+RewriteRule ^ipcam/?$		/misc/ipcam/ [L,R=301]
+RewriteRule ^papers(.*)?$	/research$1 [L,R=301]
+RewriteRule ^wiki(.*)?$		http://brandonsuit.com/wiki$1 [L,R=301]
+
+# LOCAL DEV ENVIRONMENT
+RewriteCond  %{HTTP_HOST}	possibilistic
+RewriteRule  ^tutorials/?(.*)$	http://webapp.tutorials/$1 [L,R=301]
+
+# Rewrite www-prefix URIs
+# Also shortcut and alias domains
+RewriteCond %{HTTP_HOST}   www\.posbl\.org [OR]
+RewriteCond %{HTTP_HOST}   posbl\.org [OR]
+RewriteCond %{HTTP_HOST}   www\.possibilistic\.com [OR]
+RewriteCond %{HTTP_HOST}   www\.possibilistic\.org [OR]
+RewriteCond %{HTTP_HOST}   possibilistic\.com
+RewriteRule ^(.*)$         http://possibilistic.org/$1 [L,R=301]
+
+# Research Papers
+RewriteCond %{REQUEST_FILENAME}		!-f
+RewriteCond %{REQUEST_FILENAME}\.html	-f
+RewriteRule ^research(.*)?$		/research$1.html [L]
+
+
