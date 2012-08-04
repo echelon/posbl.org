@@ -42,14 +42,14 @@ body {
 #content {
 	margin: -26px 0px 0px 0px;
 	padding: 20px 20px 20px 20px;
-	color: #eee;
 	font-family: "Ubuntu", arial;
+	text-align: justify;
+	color: #eee;
 	background-color: rgba(0, 0, 0, 0.90);
 	-webkit-border-radius: 25px;
 	-moz-border-radius: 25px;
 	border-radius: 25px;
 	box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.55);
-	text-align: justify;
 }
 
 #logo {
@@ -240,7 +240,7 @@ h3 { font-size: 2em; }
 
 #portrait {
 	float: right;
-	margin: 15px;
+	margin: 5px 15px;
 }
 
 #portrait img {

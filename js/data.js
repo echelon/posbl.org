@@ -14,7 +14,7 @@ var VIDEOS = [
 var PROJECTS = [
 	{
 		title: "Robotics Mischief",
-		date: "2010, 2012",
+		date: "2012",
 		descr: "A C++ robot controller daemon that takes instructions over a ZeroMQ socket. Clients have been written for joystick, keyboard, and computer vision/AI control.",
 		img: "/img/icons/robot.png",
 		url: "https://github.com/echelon/robot2"
