@@ -1,3 +1,5 @@
+// I lied: This isn't DNA, it's RNA. No 3'OH there. 
+
 // TODO: RandInt function. 
 var rand = function(a, b) {
 	return a + (b - a) *Math.random();
@@ -858,6 +860,7 @@ function init()
 
 	/**
 	 * Place the camera according to scroll position.
+	 * TODO: Rename, since speed and etc. are affected. 
 	 */
 	var placeCamera = function() {
 		// FIXME: Something is broken about $(document).height
@@ -886,6 +889,11 @@ function init()
 		camera.rotation.x = xRot;
 		camera.rotation.y = yRot;
 		camera.rotation.z = zRot;
+
+		// Rotation speed interpolation
+		yAuto = yAutoMax - scrollPos * (yAutoMax - yAutoMin);
+
+		console.log(yAuto);
 	}
 
 	$(window).resize(function() {
@@ -914,7 +922,9 @@ function animate()
 }
 
 var rotMat = new THREE.Matrix4();
-var yAuto = -0.05;
+var yAutoMax = -0.05; // TODO: Cleanup
+var yAutoMin = -0.02;
+var yAuto = -0.05; // Interpolate between max and min
 var yAutoState = 0.0;
 
 function render()
