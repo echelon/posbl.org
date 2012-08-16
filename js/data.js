@@ -3,6 +3,7 @@
  * Youtube video ids.
  */
 var VIDEOS = [
+	'ANsf6dMcXDc',
 	'AL2ma3AMvTc',
 	'8ycjIyorZ2Q',
 	'fFo8v_X1aeI',
