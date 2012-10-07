@@ -1,37 +1,20 @@
-/**
- * Load Fonts.
- * Ubuntu font loads with Google Web Fonts CDN
- */
 @font-face {
 	font-family: "neuropol_x";
 	src: url('./font/neuropol_x.ttf');
 }
+
 @font-face {
 	font-family: "Quantum Round";
 	src: url('./font/quantrnd.ttf');
 }
 
-/**
- * Main layout and theme
- */
 body {
 	margin: 0px;
 	padding: 0px;
 	overflow-x: hidden;
 	background-color: #111;
 	color: #eee;
-	background-image: -ms-radial-gradient(center, 
-		ellipse farthest-corner, #444444 0%, #000000 100%);
-	background-image: -moz-radial-gradient(center, 
-		ellipse farthest-corner, #444444 0%, #000000 100%);
-	background-image: -o-radial-gradient(center, 
-		ellipse farthest-corner, #444444 0%, #000000 100%);
-	background-image: -webkit-gradient(radial, center center, 0, 
-		center center, 448, color-stop(0, #444444), color-stop(1, #000000));
-	background-image: -webkit-radial-gradient(center, 
-		ellipse farthest-corner, #444444 0%, #000000 100%);
-	background-image: radial-gradient(ellipse farthest-corner 
-		at center, #444444 0%, #000000 100%);
+	background-image: url('./img/subtle_carbon.png');
 }
 
 #main {
@@ -175,11 +158,6 @@ canvas {
 }
 .itemdate:after {
 	content: ')';
-}
-
-/* XXX: TEMP */
-h2 {
-	clear: both;
 }
 
 /**

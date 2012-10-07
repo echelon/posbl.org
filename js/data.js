@@ -1,9 +1,10 @@
 
 /**
  * Youtube video ids.
+ * Keep newest at top.
  */
 var VIDEOS = [
-	'ANsf6dMcXDc',
+	'zd7A6TEthPQ',
 	'AL2ma3AMvTc',
 	'8ycjIyorZ2Q',
 	'fFo8v_X1aeI',
